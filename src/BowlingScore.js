@@ -1,14 +1,17 @@
-function BowlingScore() {
-
+function BowlingScore(currentScore, allRolls) {
+    this.currentScore = currentScore
+    this.allRolls = allRolls
 }
 
 BowlingScore.prototype = {
 
-    roll: function () {
-        return new BowlingScore()
+    roll: function (pinsKnockedDown) {
+        var newAllRolls = this.allRolls.concat(pinsKnockedDown)
+        return new BowlingScore(this.currentScore + pinsKnockedDown, newAllRolls)
     },
+
     score: function () {
-        return 0
+        return this.currentScore
     }
 
 

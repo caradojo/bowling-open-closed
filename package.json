@@ -4,7 +4,7 @@
   "description": "training the open closed principle with a complexified bowlingkata",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "mocha spec/ -w"
   },
   "keywords": [
     "kata",
