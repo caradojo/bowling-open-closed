@@ -12,14 +12,10 @@ describe('bowling', function () {
     it('adds following roll when spare', function() {
         var spareRoll = 6
         expect(scoreFor(4, spareRoll, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)).to.equal(19)
-
+        var notASare = 8
+        expect(scoreFor(4, 2, notASare, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)).to.equal(15)
     })
 
-    it('toto', function() {
-
-        expect(new BowlingScore(0 , []).isSpare([6, 4, 3])).to.be.true
-        //expect(_.chain([1, 2, 3]).takeRight(2).value()).to.equal([2, 3])
-    })
     it('strike', function() {
 
     })
@@ -28,6 +24,13 @@ describe('bowling', function () {
 
     })
 
+    it('toto', function() {
+        //var last = _.takeRight([1, 2, 3], 1)
+        //expect(last).to.be.instanceof(Number)
+
+        expect(new BowlingScore(0 , []).isSpare([6, 4, 3])).to.be.true
+        //expect(_.chain([1, 2, 3]).takeRight(2).value()).to.equal([2, 3])
+    })
     function scoreFor(roll1, roll2, roll3, etc) {
 
         function accumulateNextScore(bowlingScore, numberOfPinsKnockedDownInRoll) {
