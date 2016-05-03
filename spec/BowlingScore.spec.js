@@ -17,6 +17,8 @@ describe('bowling', function () {
     })
 
     it('strike', function() {
+        var strike = 10
+        expect(scoreFor(4, 2, 2, 1, strike, 0, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)).to.equal(37)
 
     })
 
