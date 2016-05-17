@@ -6,7 +6,6 @@ var _ = require('lodash')
 describe('bowling', function () {
 
     it('calculates simple score ', function () {
-        //expect(EmptyFrame).to.equal(1)
         expect(scoreFor(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)).to.equal(0)
         expect(scoreFor(1, 2, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0)).to.equal(50)
     })
@@ -32,6 +31,7 @@ describe('bowling', function () {
         expect(BowlingScore.spareCalculator(0).matches([6, 4, 3])).to.be.true
         expect(BowlingScore.spareCalculator(0 ).matches([10, 0, 4,])).to.be.false
     })
+
     function scoreFor(roll1, roll2, roll3, etc) {
 
         function accumulateNextScore(bowlingScore, numberOfPinsKnockedDownInRoll) {

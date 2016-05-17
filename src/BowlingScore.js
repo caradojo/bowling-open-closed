@@ -37,7 +37,7 @@ function FirstPinFrame() {
 function NormalFrameComplete() {
     return {
         roll: function () {
-            throw new Error('not bon')
+            throw new Error('Cant roll on a completed frame')
         },
         isReady: function () {
             return true
@@ -58,20 +58,18 @@ BowlingScore.prototype = {
         })
 
         var currentFrame = this.currentFrame
+
         var nextFrame = currentFrame.roll(pinsKnockedDown)
 
         var newCurrentScore = selectedRollType.calculateScore(newAllRolls)
 
         if(nextFrame.isReady()){
             var newAllFrames = this.allFrames.concat(nextFrame)
-            new BowlingScore(newCurrentScore, newAllRolls, newAllFrames, new EmptyFrame())
+            return new BowlingScore(newCurrentScore, newAllRolls, newAllFrames, new EmptyFrame())
         } else {
             var newAllFrames = this.allFrames
-            new BowlingScore(newCurrentScore, newAllRolls, newAllFrames, nextFrame)
-
-
+            return new BowlingScore(newCurrentScore, newAllRolls, newAllFrames, nextFrame)
         }
-        return new BowlingScore(newCurrentScore, newAllRolls, newAllFrames)
     },
 
     score: function () {
@@ -96,6 +94,7 @@ function strikeCalculator(currentScore) {
         }
     }
 }
+
 function spareCalculator(currentScore) {
 
     function isSpare(newAllRolls) {
@@ -118,6 +117,7 @@ function spareCalculator(currentScore) {
         }
     }
 }
+
 function normalCalculator(currentScore) {
     return {
         matches: function (newAllRolls) {
