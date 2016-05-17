@@ -37,9 +37,13 @@ function isStrike(newAllRolls) {
 }
 
 function isSpare(newAllRolls) {
+    function isNotStrike(lastFrame) {
+        return _.first(lastFrame) !== 10
+    }
     var isOddRoll = newAllRolls.length % 2 === 1
-    var sumOfLastFrame = _.chain(newAllRolls).dropRight().takeRight(2).sum().value()
-    return isOddRoll && sumOfLastFrame === 10
+    var lastFrame = _.chain(newAllRolls).dropRight().takeRight(2).value()
+    var sumOfLastFrame = _.sum(lastFrame)
+    return isOddRoll && sumOfLastFrame === 10 && isNotStrike(lastFrame)
 }
 
 BowlingScore.prototype = {

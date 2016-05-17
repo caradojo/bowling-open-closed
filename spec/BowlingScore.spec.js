@@ -18,7 +18,7 @@ describe('bowling', function () {
 
     it('strike', function() {
         var strike = 10
-        expect(scoreFor(4, 2, 2, 1, strike, 0, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)).to.equal(37)
+        expect(scoreFor(6, 0, 3, 0, strike, 0, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)).to.equal(37)
 
     })
 
@@ -26,12 +26,9 @@ describe('bowling', function () {
 
     })
 
-    it('toto', function() {
-        //var last = _.takeRight([1, 2, 3], 1)
-        //expect(last).to.be.instanceof(Number)
-
+    it('isSpare', function() {
         expect(new BowlingScore(0 , []).isSpare([6, 4, 3])).to.be.true
-        //expect(_.chain([1, 2, 3]).takeRight(2).value()).to.equal([2, 3])
+        expect(new BowlingScore(0 , []).isSpare([10, 0, 4,])).to.be.false
     })
     function scoreFor(roll1, roll2, roll3, etc) {
 
