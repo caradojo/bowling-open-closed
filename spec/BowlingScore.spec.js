@@ -1,10 +1,12 @@
 var expect = require('chai').expect
 var BowlingScore = require('../src/BowlingScore')
+var EmptyFrame = BowlingScore.EmptyFrame
 var _ = require('lodash')
 
 describe('bowling', function () {
 
     it('calculates simple score ', function () {
+        //expect(EmptyFrame).to.equal(1)
         expect(scoreFor(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)).to.equal(0)
         expect(scoreFor(1, 2, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0)).to.equal(50)
     })
@@ -37,7 +39,7 @@ describe('bowling', function () {
         }
 
         var allRolls = Array.prototype.slice.call(arguments);
-        var finalBowlingScore = allRolls.reduce(accumulateNextScore, new BowlingScore(0, []))
+        var finalBowlingScore = allRolls.reduce(accumulateNextScore, new BowlingScore(0, [], [], new EmptyFrame()))
 
         return finalBowlingScore.score()
 

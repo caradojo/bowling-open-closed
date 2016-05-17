@@ -1,16 +1,53 @@
 var _ = require('lodash')
 
-function BowlingScore(currentScore, allRolls) {
+function BowlingScore(currentScore, allRolls, allFrames, currentFrame) {
     this.currentScore = currentScore
     this.allRolls = allRolls
+    this.allFrames = allFrames
+    this.currentFrame = currentFrame
     this.rollTypes = [
         strikeCalculator(currentScore),
         spareCalculator(currentScore),
         normalCalculator(currentScore)]
 }
 
-BowlingScore.prototype = {
+function EmptyFrame() {
+    return {
+        roll: function (pinsKnockedDown) {
+            return new FirstPinFrame(pinsKnockedDown)
+        },
+        isReady: function () {
+            return false
+        }
 
+    }
+}
+
+function FirstPinFrame() {
+    return {
+        roll: function (pinsKnockedDown) {
+            return new NormalFrameComplete(pinsKnockedDown)
+        },
+        isReady: function () {
+            return false
+        }
+    }
+}
+
+function NormalFrameComplete() {
+    return {
+        roll: function () {
+            throw new Error('not bon')
+        },
+        isReady: function () {
+            return true
+        }
+    }
+}
+
+
+
+BowlingScore.prototype = {
 
     roll: function (pinsKnockedDown) {
 
@@ -20,18 +57,27 @@ BowlingScore.prototype = {
             return rollType.matches(newAllRolls)
         })
 
+        var currentFrame = this.currentFrame
+        var nextFrame = currentFrame.roll(pinsKnockedDown)
+
         var newCurrentScore = selectedRollType.calculateScore(newAllRolls)
-        return new BowlingScore(newCurrentScore, newAllRolls)
+
+        if(nextFrame.isReady()){
+            var newAllFrames = this.allFrames.concat(nextFrame)
+            new BowlingScore(newCurrentScore, newAllRolls, newAllFrames, new EmptyFrame())
+        } else {
+            var newAllFrames = this.allFrames
+            new BowlingScore(newCurrentScore, newAllRolls, newAllFrames, nextFrame)
+
+
+        }
+        return new BowlingScore(newCurrentScore, newAllRolls, newAllFrames)
     },
 
     score: function () {
         return this.currentScore
     }
-
-
 }
-
-
 
 function strikeCalculator(currentScore) {
     function isStrike(newAllRolls) {
@@ -87,5 +133,6 @@ function normalCalculator(currentScore) {
 
 
 BowlingScore.spareCalculator = spareCalculator
+BowlingScore.EmptyFrame = EmptyFrame
 
 module.exports = BowlingScore
