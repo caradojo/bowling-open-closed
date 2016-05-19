@@ -18,16 +18,6 @@ describe('bowling', function () {
         expect(scoreFor("60 30 X 45 00 00 00 00 00 00")).to.equal(6+ 3 + 19 + 9)
     })
 
-    it('lastFrame', function () {
-        expect(parseInt('2')).to.equal(2)
-        //expect('12'.split('')).to.equal([1, 2])
-        expect(['1', '2'].map(function (n) {
-            return parseInt(n)
-        })).to.deep.equal([1, 2])
-        //expect('12'.split('').map(parseInt)).to.equal([1, 2])
-
-    })
-
     function parseToInteger(n) {
         return Number.parseInt(n)
     }
@@ -35,6 +25,5 @@ describe('bowling', function () {
     function scoreFor(rolls) {
         var allRolls = rolls.replace(/ /g, "").split('').map(parseToInteger)
         return BowlingScore.totalScore(allRolls)
-
     }
 })

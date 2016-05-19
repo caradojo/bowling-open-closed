@@ -1,47 +1,25 @@
 var _ = require('lodash')
 
-function BowlingScore(framesSoFar) {
-    this.framesSoFar = framesSoFar
+function BowlingScore() {
 }
 
-
-function parseToInteger(n) {
-    return Number.parseInt(n)
-}
-function calculateFrame(framesSoFar) {
-    return function calculateCurrentFrame(currentFrame) {
-        var rolls = currentFrame.split('').map(parseToInteger)
-        return rolls[0] + rolls[1]
-    }
-
-}
 
 function sum(a, b) {
     return a + b
 }
 
-BowlingScore.prototype = {
-
-    roll: function (frame) {
-        return new BowlingScore(this.framesSoFar.concat(frame))
-    },
-
-    score: function () {
-        var framesSoFar = this.framesSoFar
-        return framesSoFar.map(calculateFrame(framesSoFar)).reduce(sum)
-    }
+function recursiveFrameScore(remainingRolls) {
+    if (remainingRolls.length === 0) return []
+    var currentFrameScore = remainingRolls[0] + remainingRolls[1]
+    var nextRemainingRolls = _.drop(remainingRolls, 2)
+    return [currentFrameScore].concat(recursiveFrameScore(nextRemainingRolls))
 }
 
 function totalScore(allRolls) {
-    var framesScores = []
-
-    for (var i = 0;  i<allRolls.length-1;) {
-        framesScores.push(allRolls[i] + allRolls[i+1])
-        i=i+2;
-    }
+    var framesScores = recursiveFrameScore(allRolls)
     return framesScores.reduce(sum)
-
 }
+
 BowlingScore.totalScore = totalScore
 
 module.exports = BowlingScore
