@@ -28,10 +28,10 @@ function EmptyFrame() {
     }
 }
 
-function FirstRollFrame() {
+function FirstRollFrame(pinsDown) {
     return {
         roll: function (pinsKnockedDown) {
-            return new NormalFrameComplete(pinsKnockedDown)
+            return new NormalFrameComplete([pinsDown, pinsKnockedDown])
         },
         isReady: function () {
             return false
@@ -42,18 +42,31 @@ function FirstRollFrame() {
     }
 }
 
-function NormalFrameComplete() {
+function NormalFrameComplete(pinsDownArray) {
     return {
         roll: function () {
             throw new Error('Cant roll on a completed frame')
         },
         isReady: function () {
             return true
-        }
-        ,
+        },
         next: function(){
             return new EmptyFrame()
+        },
+        isStrike: function()
+        {
+            return pinsDownArray[0] == 10
+        },
+        isSpare: function()
+        {
+            return !isStrike() 
+                && pinsDownArray[0] + pinsDownArray[1] == 10
+        },
+        score:function()
+        {
+            return _.chain(pinsDownArray).sum().value()
         }
+        
     }
 }
 
