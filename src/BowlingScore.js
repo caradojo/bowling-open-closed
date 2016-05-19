@@ -32,4 +32,16 @@ BowlingScore.prototype = {
     }
 }
 
+function totalScore(allRolls) {
+    var framesScores = []
+
+    for (var i = 0;  i<allRolls.length-1;) {
+        framesScores.push(allRolls[i] + allRolls[i+1])
+        i=i+2;
+    }
+    return framesScores.reduce(sum)
+
+}
+BowlingScore.totalScore = totalScore
+
 module.exports = BowlingScore

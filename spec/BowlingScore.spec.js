@@ -28,17 +28,13 @@ describe('bowling', function () {
 
     })
 
+    function parseToInteger(n) {
+        return Number.parseInt(n)
+    }
 
     function scoreFor(rolls) {
-
-        function accumulateNextScore(bowlingScore, numberOfPinsKnockedDownInRoll) {
-            return bowlingScore.roll(numberOfPinsKnockedDownInRoll)
-        }
-
-        var allRolls = rolls.split(" ")
-        var finalBowlingScore = allRolls.reduce(accumulateNextScore, new BowlingScore([]))
-
-        return finalBowlingScore.score()
+        var allRolls = rolls.replace(/ /g, "").split('').map(parseToInteger)
+        return BowlingScore.totalScore(allRolls)
 
     }
 })
