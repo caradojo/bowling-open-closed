@@ -59,7 +59,7 @@ function NormalFrameComplete(pinsDownArray) {
         },
         isSpare: function()
         {
-            return !isStrike() 
+            return !this.isStrike() 
                 && pinsDownArray[0] + pinsDownArray[1] == 10
         },
         score:function()
@@ -78,20 +78,18 @@ BowlingScore.prototype = {
 
         var newAllRolls = this.allRolls.concat(pinsKnockedDown)
 
-        var selectedRollType = _.find(this.rollTypes, function (rollType) {
-            return rollType.matches(newAllRolls)
-        })
-
-        var currentFrame = this.currentFrame
-
-        this.currentFrame = currentFrame.roll(pinsKnockedDown)
-
-        var newCurrentScore = selectedRollType.calculateScore(newAllRolls)
-
+        this.currentFrame = this.currentFrame.roll(pinsKnockedDown)
         var newAllFrames = this.allFrames
         if(this.currentFrame.isReady()){
             newAllFrames = this.allFrames.concat(this.currentFrame)
         }
+        
+        var selectedRollType = _.find(this.rollTypes, function (rollType) {
+            return rollType.matches(newAllRolls, newAllFrames)
+        })
+
+        var newCurrentScore = selectedRollType.calculateScore(newAllRolls)
+
         return new BowlingScore(newCurrentScore, newAllRolls, newAllFrames, this.currentFrame.next())
     },
 
@@ -108,7 +106,7 @@ function strikeCalculator(currentScore) {
     }
 
     return {
-        matches: function (newAllRolls) {
+        matches: function (newAllRolls, newAllFrames) {
             return isStrike(newAllRolls)
         },
         calculateScore: function (newAllRolls) {
@@ -120,19 +118,14 @@ function strikeCalculator(currentScore) {
 
 function spareCalculator(currentScore) {
 
-    function isSpare(newAllRolls) {
-        function isNotStrike(lastFrame) {
-            return _.first(lastFrame) !== 10
-        }
-        var isOddRoll = newAllRolls.length % 2 === 1
-        var lastFrame = _.chain(newAllRolls).dropRight().takeRight(2).value()
-        var sumOfLastFrame = _.sum(lastFrame)
-        return isOddRoll && sumOfLastFrame === 10 && isNotStrike(lastFrame)
+    function previousIsSpare(newAllFrames) {               
+        var lastFrame = _.chain(newAllFrames).dropRight().last().value()        
+        return newAllFrames.length >=2 && lastFrame.isSpare()
     }
 
     return {
-        matches: function (newAllRolls) {
-            return isSpare(newAllRolls)
+        matches: function (newAllRolls, newAllFrames) {
+            return previousIsSpare(newAllFrames)
         },
         calculateScore: function (newAllRolls) {
             var pinsKnockedDown = _.last(newAllRolls)
@@ -143,7 +136,7 @@ function spareCalculator(currentScore) {
 
 function normalCalculator(currentScore) {
     return {
-        matches: function (newAllRolls) {
+        matches: function (newAllRolls, newAllFrames) {
             return true
         },
         calculateScore: function (newAllRolls) {
@@ -157,5 +150,6 @@ function normalCalculator(currentScore) {
 
 BowlingScore.spareCalculator = spareCalculator
 BowlingScore.EmptyFrame = EmptyFrame
+BowlingScore.NormalFrameComplete = NormalFrameComplete
 
 module.exports = BowlingScore
