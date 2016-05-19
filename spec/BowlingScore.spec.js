@@ -9,8 +9,8 @@ describe('bowling', function () {
         expect(scoreFor("12 34 54 32 10 12 34 54 32 10")).to.equal(50)
     })
 
-    it.skip('adds following roll when spare', function () {
-        expect(scoreFor("4/ 33 00 00 00 00 00 00 00 00")).to.equal(13 + 6)
+    it('adds following roll when spare', function () {
+        expect(scoreFor("46 33 00 00 00 00 00 00 00 00")).to.equal(13 + 6)
         expect(scoreFor("42 81 00 00 00 00 00 00 00 00")).to.equal(6 + 9)
     })
 

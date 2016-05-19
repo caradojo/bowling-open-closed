@@ -10,7 +10,12 @@ function sum(a, b) {
 
 function recursiveFrameScore(remainingRolls) {
     if (remainingRolls.length === 0) return []
-    var currentFrameScore = remainingRolls[0] + remainingRolls[1]
+    var currentFrameScore;
+    if (remainingRolls[0] + remainingRolls[1] == 10) {
+        currentFrameScore = 10 + remainingRolls[2]
+    } else {
+        currentFrameScore = remainingRolls[0] + remainingRolls[1];
+    }
     var nextRemainingRolls = _.drop(remainingRolls, 2)
     return [currentFrameScore].concat(recursiveFrameScore(nextRemainingRolls))
 }
