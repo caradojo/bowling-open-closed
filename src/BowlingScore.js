@@ -14,22 +14,30 @@ function BowlingScore(currentScore, allRolls, allFrames, currentFrame) {
 function EmptyFrame() {
     return {
         roll: function (pinsKnockedDown) {
-            return new FirstPinFrame(pinsKnockedDown)
+            return new FirstRollFrame(pinsKnockedDown)
         },
         isReady: function () {
             return false
+        },
+        next: function(){
+            return this
         }
+        
+        
 
     }
 }
 
-function FirstPinFrame() {
+function FirstRollFrame() {
     return {
         roll: function (pinsKnockedDown) {
             return new NormalFrameComplete(pinsKnockedDown)
         },
         isReady: function () {
             return false
+        },
+        next: function(){
+            return this
         }
     }
 }
@@ -41,6 +49,10 @@ function NormalFrameComplete() {
         },
         isReady: function () {
             return true
+        }
+        ,
+        next: function(){
+            return new EmptyFrame()
         }
     }
 }
@@ -59,20 +71,18 @@ BowlingScore.prototype = {
 
         var currentFrame = this.currentFrame
 
-        var nextFrame = currentFrame.roll(pinsKnockedDown)
+        this.currentFrame = currentFrame.roll(pinsKnockedDown)
 
         var newCurrentScore = selectedRollType.calculateScore(newAllRolls)
 
-        if(nextFrame.isReady()){
-            var newAllFrames = this.allFrames.concat(nextFrame)
-            return new BowlingScore(newCurrentScore, newAllRolls, newAllFrames, new EmptyFrame())
-        } else {
-            var newAllFrames = this.allFrames
-            return new BowlingScore(newCurrentScore, newAllRolls, newAllFrames, nextFrame)
+        var newAllFrames = this.allFrames
+        if(this.currentFrame.isReady()){
+            newAllFrames = this.allFrames.concat(this.currentFrame)
         }
+        return new BowlingScore(newCurrentScore, newAllRolls, newAllFrames, this.currentFrame.next())
     },
 
-    score: function () {
+    score: function () { 
         return this.currentScore
     }
 }
