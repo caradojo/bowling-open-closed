@@ -52,10 +52,10 @@ function scoreAndRemainingRolls(currentFrameScore, nextRemainingRolls) {
 
 
 function findFrameType(allFrameType, remainingRolls) {
-    var frameType = _.find(allFrameType, function (frameType) {
+    function matchesCurrentFrame(frameType) {
         return frameType.matches(remainingRolls)
-    })
-    return frameType
+    }
+    return _.find(allFrameType, matchesCurrentFrame)
 }
 
 module.exports = {
