@@ -16,6 +16,7 @@ describe('bowling', function () {
 
     it('strike', function () {
         expect(scoreFor("60 30 X 45 00 00 00 00 00 00")).to.equal(6+ 3 + 19 + 9)
+        expect(scoreFor("00 00 00 00 00 00 00 00 00 XXX")).to.equal(30)
     })
 
     function parseToInteger(n) {

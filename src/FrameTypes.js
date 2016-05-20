@@ -5,8 +5,14 @@ function strikeFrame() {
         return rolls[0] == 10
     }
     function applyStrike(rolls) {
-        var frameScore = 10 + rolls[1] + rolls[2]
-        var nextRolls = _.drop(rolls, 1);
+        var frameScore;
+        if (rolls[1] && rolls[2]) {
+            frameScore = 10 + rolls[1] + rolls[2];
+        }
+        else {
+            frameScore = 0
+        }
+        var nextRolls = _.drop(rolls, 1)
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
     return {
