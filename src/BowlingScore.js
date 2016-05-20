@@ -45,29 +45,25 @@ var normalScoreCalculator = {
     matches: function(){ return true},
     calculateScore:calculateNormalScore
 }
+
 function calculateNormalScore(remainingRolls) {
     var currentFrameScore = remainingRolls[0] + remainingRolls[1];
     var nextRemainingRolls = _.drop(remainingRolls, 2);
     return scoreAndRemainingRolls(currentFrameScore, nextRemainingRolls)
 }
+
 function recursiveFrameScore(remainingRolls) {
     if (remainingRolls.length === 0) return []
 
-    var scoreAndRemainingRolls;
+    var allFrameType = [strikeCalculator, spareCalculator, normalScoreCalculator]
+    var frameType = _.find(allFrameType, function (frameType) {
+        return frameType.matches(remainingRolls)
+    })
 
-    if (strikeCalculator.matches(remainingRolls)) {
-        scoreAndRemainingRolls = strikeCalculator.calculateScore(remainingRolls);
-    }
-    else if (spareCalculator.matches(remainingRolls)) {
-        scoreAndRemainingRolls = spareCalculator.calculateScore(remainingRolls)
-    } else {
-        scoreAndRemainingRolls = normalScoreCalculator.calculateScore(remainingRolls)
-    }
+    var scoreAndRemainingRolls = frameType.calculateScore(remainingRolls)
 
-    var currentFrameScore = scoreAndRemainingRolls.currentFrameScore
-    var nextRemainingRolls = scoreAndRemainingRolls.nextRemainingRolls
-
-    return [currentFrameScore].concat(recursiveFrameScore(nextRemainingRolls))
+    var nextFrameScores = recursiveFrameScore(scoreAndRemainingRolls.nextRemainingRolls)
+    return [scoreAndRemainingRolls.currentFrameScore].concat(nextFrameScores)
 }
 
 function totalScore(allRolls) {
