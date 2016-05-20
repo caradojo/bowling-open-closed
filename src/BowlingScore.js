@@ -25,30 +25,47 @@ var strikeCalculator = {
     calculateScore: applyStrike
 }
 
+var spareCalculator = {
+    matches: isSpare,
+    calculateScore: calculateSpare
+
+}
+
 function isSpare(remainingRolls) {
     return remainingRolls[0] + remainingRolls[1] == 10
+}
+
+function calculateSpare(remainingRolls) {
+    var currentFrameScore = 10 + remainingRolls[2]
+    var nextRemainingRolls = _.drop(remainingRolls, 2);
+    return scoreAndRemainingRolls(currentFrameScore, nextRemainingRolls)
+}
+
+var normalScoreCalculator = {
+    matches: function(){ return true},
+    calculateScore:calculateNormalScore
+}
+function calculateNormalScore(remainingRolls) {
+    var currentFrameScore = remainingRolls[0] + remainingRolls[1];
+    var nextRemainingRolls = _.drop(remainingRolls, 2);
+    return scoreAndRemainingRolls(currentFrameScore, nextRemainingRolls)
 }
 function recursiveFrameScore(remainingRolls) {
     if (remainingRolls.length === 0) return []
 
-
-    var currentFrameScore;
-    var nextRemainingRolls;
-    var __ret;
-
+    var scoreAndRemainingRolls;
 
     if (strikeCalculator.matches(remainingRolls)) {
-        __ret = strikeCalculator.calculateScore(remainingRolls);
-        currentFrameScore = __ret.currentFrameScore
-        nextRemainingRolls = __ret.nextRemainingRolls
+        scoreAndRemainingRolls = strikeCalculator.calculateScore(remainingRolls);
     }
-    else if (isSpare(remainingRolls)) {
-        currentFrameScore = 10 + remainingRolls[2]
-        nextRemainingRolls = _.drop(remainingRolls, 2);
+    else if (spareCalculator.matches(remainingRolls)) {
+        scoreAndRemainingRolls = spareCalculator.calculateScore(remainingRolls)
     } else {
-        currentFrameScore = remainingRolls[0] + remainingRolls[1];
-        nextRemainingRolls = _.drop(remainingRolls, 2);
+        scoreAndRemainingRolls = normalScoreCalculator.calculateScore(remainingRolls)
     }
+
+    var currentFrameScore = scoreAndRemainingRolls.currentFrameScore
+    var nextRemainingRolls = scoreAndRemainingRolls.nextRemainingRolls
 
     return [currentFrameScore].concat(recursiveFrameScore(nextRemainingRolls))
 }
