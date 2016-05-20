@@ -1,13 +1,13 @@
 var _ = require('lodash')
 
 function strikeFrame() {
-    function isStrike(remainingRolls) {
-        return remainingRolls[0] == 10
+    function isStrike(rolls) {
+        return rolls[0] == 10
     }
-    function applyStrike(remainingRolls) {
-        var currentFrameScore = 10 + remainingRolls[1] + remainingRolls[2]
-        var nextRemainingRolls = _.drop(remainingRolls, 1);
-        return scoreAndRemainingRolls(currentFrameScore, nextRemainingRolls)
+    function applyStrike(rolls) {
+        var frameScore = 10 + rolls[1] + rolls[2]
+        var nextRolls = _.drop(rolls, 1);
+        return scoreAndRemainingRolls(frameScore, nextRolls)
     }
     return {
         matches: isStrike,
@@ -16,13 +16,13 @@ function strikeFrame() {
 }
 
 function spareFrame() {
-    function isSpare(remainingRolls) {
-        return remainingRolls[0] + remainingRolls[1] == 10
+    function isSpare(rolls) {
+        return rolls[0] + rolls[1] == 10
     }
-    function calculateSpare(remainingRolls) {
-        var currentFrameScore = 10 + remainingRolls[2]
-        var nextRemainingRolls = _.drop(remainingRolls, 2);
-        return scoreAndRemainingRolls(currentFrameScore, nextRemainingRolls)
+    function calculateSpare(rolls) {
+        var frameScore = 10 + rolls[2]
+        var nextRolls = _.drop(rolls, 2);
+        return scoreAndRemainingRolls(frameScore, nextRolls)
     }
     return {
         matches: isSpare,
@@ -30,13 +30,11 @@ function spareFrame() {
     }
 }
 
-
-
 function normalFrame() {
-    function calculateNormalScore(remainingRolls) {
-        var currentFrameScore = remainingRolls[0] + remainingRolls[1];
-        var nextRemainingRolls = _.drop(remainingRolls, 2);
-        return scoreAndRemainingRolls(currentFrameScore, nextRemainingRolls)
+    function calculateNormalScore(rolls) {
+        var frameScore = rolls[0] + rolls[1];
+        var nextRolls = _.drop(rolls, 2);
+        return scoreAndRemainingRolls(frameScore, nextRolls)
     }
     return {
         matches: function () {
@@ -46,14 +44,13 @@ function normalFrame() {
     }
 }
 
-function scoreAndRemainingRolls(currentFrameScore, nextRemainingRolls) {
-    return {currentFrameScore: currentFrameScore, nextRemainingRolls: nextRemainingRolls}
+function scoreAndRemainingRolls(frameScore, nextRolls) {
+    return {frameScore: frameScore, nextRolls: nextRolls}
 }
 
-
-function findFrameType(allFrameType, remainingRolls) {
+function findFrameType(allFrameType, rolls) {
     function matchesCurrentFrame(frameType) {
-        return frameType.matches(remainingRolls)
+        return frameType.matches(rolls)
     }
     return _.find(allFrameType, matchesCurrentFrame)
 }

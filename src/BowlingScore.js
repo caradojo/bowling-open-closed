@@ -15,13 +15,13 @@ function sum(a, b) {
 function recursiveFrameScore(remainingRolls) {
     if (remainingRolls.length === 0) return []
 
-    var allFrameType = [strikeFrame(), spareFrame(), normalFrame()]
-    var frameType = FrameTypes.findFrameType(allFrameType, remainingRolls)
+    var allFrameTypes = [strikeFrame(), spareFrame(), normalFrame()]
+    var frameType = FrameTypes.findFrameType(allFrameTypes, remainingRolls)
 
-    var scoreAndRemainingRolls = frameType.calculateScore(remainingRolls)
+    var scoreAndNextRolls = frameType.calculateScore(remainingRolls)
 
-    var nextFrameScores = recursiveFrameScore(scoreAndRemainingRolls.nextRemainingRolls)
-    return [scoreAndRemainingRolls.currentFrameScore].concat(nextFrameScores)
+    var nextFrameScores = recursiveFrameScore(scoreAndNextRolls.nextRolls)
+    return [scoreAndNextRolls.frameScore].concat(nextFrameScores)
 }
 
 function totalScore(allRolls) {
