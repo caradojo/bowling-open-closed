@@ -16,9 +16,7 @@ function recursiveFrameScore(remainingRolls) {
     if (remainingRolls.length === 0) return []
 
     var allFrameType = [strikeFrame(), spareFrame(), normalFrame()]
-    var frameType = _.find(allFrameType, function (frameType) {
-        return frameType.matches(remainingRolls)
-    })
+    var frameType = FrameTypes.findFrameType(allFrameType, remainingRolls)
 
     var scoreAndRemainingRolls = frameType.calculateScore(remainingRolls)
 

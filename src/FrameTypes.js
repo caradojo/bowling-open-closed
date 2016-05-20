@@ -51,8 +51,16 @@ function calculateNormalScore(remainingRolls) {
     return scoreAndRemainingRolls(currentFrameScore, nextRemainingRolls)
 }
 
+function findFrameType(allFrameType, remainingRolls) {
+    var frameType = _.find(allFrameType, function (frameType) {
+        return frameType.matches(remainingRolls)
+    })
+    return frameType
+}
+
 module.exports = {
     strikeFrame: strikeFrame,
     spareFrame: spareFrame,
     normalFrame: normalFrame,
+    findFrameType: findFrameType
 }
