@@ -31,7 +31,7 @@ public class BowlingGameTest {
     Assertions.assertThat(score).isEqualTo(0);
   }
 
-  @TestWith(value="[1, 1, 1, 1] ; 4", separator=";")
+  @TestWith(value={"[0, 0, 0] ; 0", "[1, 1, 1, 1] ; 4", "[5, 4, 2, 1, 8, 1] ; 21"}, separator=";")
   public void score_is_the_sum_of_pins_knocked_down(List<Integer> pinsGame, Integer expectedScore) {
     //Given
     BowlingGame bowling = new BowlingGame();
