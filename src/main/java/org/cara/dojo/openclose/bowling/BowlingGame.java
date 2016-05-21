@@ -1,15 +1,18 @@
 package org.cara.dojo.openclose.bowling;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BowlingGame {
 
-  int score = 0;
+  List<Integer> pins = new ArrayList<Integer>();
 
-  public void roll(int pins) {
-    score += pins;
+  public void roll(Integer newPins) {
+    pins.add(newPins);
   }
 
-  public int score() {
-    return score;
+  public Integer score() {
+    return pins.stream().mapToInt(i -> i.intValue()).sum();
   }
 
 }
