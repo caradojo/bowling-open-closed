@@ -8,7 +8,11 @@ public class FrameScore {
   private List<Integer> pins = new ArrayList<Integer>();
   
   public void roll(Integer newPins) {
-    pins.add(newPins);
+    
+    if (pins.size() < 2)
+    {
+      pins.add(newPins);
+    }
   }
 
   public Integer score() {

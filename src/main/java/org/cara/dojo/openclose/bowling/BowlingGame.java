@@ -5,14 +5,19 @@ import java.util.List;
 
 public class BowlingGame {
 
-  List<Integer> pins = new ArrayList<Integer>();
+  List<FrameScore> frames = new ArrayList<FrameScore>();
+  int nbRolls = 0;
 
   public void roll(Integer newPins) {
-    pins.add(newPins);
+    if (nbRolls % 2 == 0) {
+      frames.add(new FrameScore());
+    }
+    nbRolls++;
+
+    frames.stream().forEach(f -> f.roll(newPins));
   }
 
   public Integer score() {
-    return pins.stream().mapToInt(i -> i.intValue()).sum();
+    return frames.stream().mapToInt(f -> f.score().intValue()).sum();
   }
-
 }
