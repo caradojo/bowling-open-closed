@@ -10,7 +10,7 @@ import com.googlecode.zohhak.api.runners.ZohhakRunner;
 public class DefaultFrameTest {
 
   @TestWith({"1","2"})
-  public void default_frame_should_listen_until_two_rolls(Integer nbRolls) {
+  public void default_frame_listen_until_two_rolls(Integer nbRolls) {
     //Given
     DefaultFrame frame = new DefaultFrame();
     
@@ -19,6 +19,18 @@ public class DefaultFrameTest {
     
     // Then
     Assertions.assertThat(shouldListen).isTrue();
+  }
+  
+  @TestWith({"3","4","8","10","23"})
+  public void default_frame_not_listen_after_two_rolls(Integer nbRolls) {
+    //Given
+    DefaultFrame frame = new DefaultFrame();
+    
+    // When
+    boolean shouldListen = frame.shouldListenRoll(nbRolls);
+    
+    // Then
+    Assertions.assertThat(shouldListen).isFalse();
   }
   
 }
