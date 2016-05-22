@@ -6,10 +6,11 @@ import java.util.List;
 public class FrameScore {
   
   private List<Integer> pins = new ArrayList<Integer>();
+  private DefaultFrame frame = new DefaultFrame();
   
   public void roll(Integer newPins) {
     
-    if (pins.size() < 2)
+    if (frame.shouldListenRoll(pins.size() +1))
     {
       pins.add(newPins);
     }
