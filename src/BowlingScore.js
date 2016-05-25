@@ -3,6 +3,7 @@ var FrameTypes = require('./FrameTypes')
 var strikeFrame = FrameTypes.strikeFrame
 var spareFrame = FrameTypes.spareFrame
 var normalFrame = FrameTypes.normalFrame
+var normalIncompleteFrame = FrameTypes.normalIncompleteFrame
 
 function BowlingScore() {
 
@@ -15,7 +16,7 @@ function sum(a, b) {
 function recursiveFrameScore(remainingRolls) {
     if (remainingRolls.length === 0) return []
 
-    var allFrameTypes = [strikeFrame(), spareFrame(), normalFrame()]
+    var allFrameTypes = [strikeFrame(), spareFrame(), normalFrame(), normalIncompleteFrame()]
     var frameType = FrameTypes.findFrameType(allFrameTypes, remainingRolls)
 
     var scoreAndNextRolls = frameType.calculateScore(remainingRolls)

@@ -43,12 +43,27 @@ function normalFrame() {
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
     return {
+        matches: function (rolls) {
+            return rolls.length > 1;
+        },
+        calculateScore: calculateNormalScore
+    }
+}
+
+function normalIncompleteFrame() {
+    function calculateNormalScore(rolls) {              
+        var frameScore = rolls[0];      
+        var nextRolls = _.drop(rolls, 1);
+        return scoreAndRemainingRolls(frameScore, nextRolls)
+    }
+    return {
         matches: function () {
             return true
         },
         calculateScore: calculateNormalScore
     }
 }
+
 
 function scoreAndRemainingRolls(frameScore, nextRolls) {
     return {frameScore: frameScore, nextRolls: nextRolls}
@@ -65,5 +80,6 @@ module.exports = {
     strikeFrame: strikeFrame,
     spareFrame: spareFrame,
     normalFrame: normalFrame,
+    normalIncompleteFrame: normalIncompleteFrame,
     findFrameType: findFrameType
 }
