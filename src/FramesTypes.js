@@ -16,7 +16,7 @@ function StrikeFrame(pinsDown)
                return new StrikeFrame(newPinsArray);
            }
            else{
-               return new ClosedFrame(newPinsArray)
+               return new CompleteFrame(newPinsArray)
            }
        }
        
@@ -43,15 +43,27 @@ function EmptyFrame()
 
 function IncompleteFrame(pinsDown)
 {   
+    function nextFrame(newPinsDown)
+    {
+        var newArray = pinsDown.concat(newPinsDown)
+        if (newArray.reduce(sum) === 10)
+        {
+            return new SpareFrame(newArray)
+        }
+        else
+        {
+            return new CompleteFrame(newArray)   
+        }               
+    }
    return {
        score : function() {return pinsDown.reduce(sum);},
        roll : function(newPinsDown){
-           return [new CompleteFrame(pinsDown.concat(newPinsDown)), new EmptyFrame()];
+           return [nextFrame(newPinsDown), new EmptyFrame()];
        }       
     }  
 }
 
-function ClosedFrame(pinsDown)
+function CompleteFrame(pinsDown)
 {
      return {
        score : function() {return pinsDown.reduce(sum);},
@@ -61,19 +73,12 @@ function ClosedFrame(pinsDown)
     }  
 }
 
-function CompleteFrame(pinsDown)
+function SpareFrame(pinsDown)
 {   
    return {
        score : function() {return pinsDown.reduce(sum);},
        roll : function(newPinsDown){
-            if (this.score() === 10)
-            {
-               return new ClosedFrame(pinsDown.concat(newPinsDown));
-            }
-            else
-            {
-                return this;
-            }
+            return new CompleteFrame(pinsDown.concat(newPinsDown));            
        }       
     }  
 }
@@ -86,5 +91,6 @@ function FramesTypes()
 FramesTypes.EmptyFrame = EmptyFrame;
 FramesTypes.IncompleteFrame = IncompleteFrame;
 FramesTypes.CompleteFrame = CompleteFrame;
+FramesTypes.SpareFrame = SpareFrame;
 
 module.exports = FramesTypes

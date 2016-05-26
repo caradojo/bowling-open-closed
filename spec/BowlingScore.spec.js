@@ -19,7 +19,7 @@ describe('bowling', function () {
 
     it('strike', function () {
         expect(scoreFor("X 3")).to.equal(16)  
-       // expect(scoreFor("60 30 X 45 00 00 00 00 00 00")).to.equal(6+ 3 + 19 + 9)        
+        expect(scoreFor("60 30 X 45 00 00 00 00 00 00")).to.equal(6+ 3 + 19 + 9)        
     })
 
    
