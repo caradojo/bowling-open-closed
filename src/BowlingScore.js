@@ -1,4 +1,6 @@
 var _ = require('lodash')
+var FramesTypes = require('../src/FramesTypes')
+var EmptyFrame = FramesTypes.EmptyFrame;
 
 function BowlingScore(frames) {    
     this.allFrames = frames
@@ -7,37 +9,6 @@ function BowlingScore(frames) {
 function sum(a,b)
 {
     return a+b
-}
-
-function EmptyFrame()
-{
-    return {
-       score : function() {return 0;},
-       roll : function(pinsDown){
-           return new IncompleteFrame([pinsDown])
-       }
-       
-    }
-}
-
-function IncompleteFrame(pinsDown)
-{   
-   return {
-       score : function() {return pinsDown.reduce(sum);},
-       roll : function(newPinsDown){
-           return [new CompleteFrame(pinsDown.concat(newPinsDown)), new EmptyFrame()];
-       }       
-    }  
-}
-
-function CompleteFrame(pinsDown)
-{   
-   return {
-       score : function() {return pinsDown.reduce(sum);},
-       roll : function(newPinsDown){
-           return this;
-       }       
-    }  
 }
 
 BowlingScore.prototype = {
