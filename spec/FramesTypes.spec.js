@@ -40,6 +40,6 @@ describe('bowling frames', function () {
         var c = i.roll(4)[0];  
         var s =  c.roll(3);           
          expect(s.score() ).to.equal(13)         
-    })    
+    })   
     
 })

@@ -5,18 +5,6 @@ var _ = require('lodash')
 
 describe('bowling', function () {
 
-   /* it('frames', function () {        
-        var f1 = new EmptyFrame()
-        expect(f1.score() ).to.equal(0)
-        var newAllFrames = [];
-        var allFrames = [f1]
-        for (var i = 0; i < allFrames.length; i++)
-        {
-            newAllFrames = newAllFrames.concat(allFrames[i].roll(1));
-        }
-        expect(newAllFrames).to.equal(1)
-    })*/
-    
     it('calculates simple score ', function () {
         expect(scoreFor("00 00 00 00 00 00 00 00 00 00")).to.equal(0)
         expect(scoreFor("12 34 54 32 10 12 34 54 32 10")).to.equal(50)
@@ -28,11 +16,12 @@ describe('bowling', function () {
         expect(scoreFor("42 81 00 00 00 00 00 00 00 00")).to.equal(6 + 9)
         expect(scoreFor("46 3")).to.equal(16)  
     })
-/*
+
     it('strike', function () {
-        expect(scoreFor("60 30 X0 45 00 00 00 00 00 00")).to.equal(6+ 3 + 19 + 9)        
+        expect(scoreFor("X 3")).to.equal(16)  
+       // expect(scoreFor("60 30 X 45 00 00 00 00 00 00")).to.equal(6+ 3 + 19 + 9)        
     })
-*/
+
    
     function scoreFor(rolls) {
 

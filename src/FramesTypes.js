@@ -5,12 +5,37 @@ function sum(a,b)
     return a+b
 }
 
+function StrikeFrame(pinsDown)
+{
+    return {
+       score : function() {return pinsDown.reduce(sum)},
+       roll : function(newPinsDown){
+           var newPinsArray = pinsDown.concat(newPinsDown);
+           if (newPinsArray.length < 3)
+           {
+               return new StrikeFrame(newPinsArray);
+           }
+           else{
+               return new ClosedFrame(newPinsArray)
+           }
+       }
+       
+    } 
+}
+
 function EmptyFrame()
 {
     return {
        score : function() {return 0;},
        roll : function(pinsDown){
-           return new IncompleteFrame([pinsDown])
+           if (pinsDown === 10)
+           {
+               return [new StrikeFrame([pinsDown]),new EmptyFrame()];
+           }
+           else
+           {
+               return new IncompleteFrame([pinsDown])
+           }
        }
        
     }
@@ -26,16 +51,24 @@ function IncompleteFrame(pinsDown)
     }  
 }
 
-
+function ClosedFrame(pinsDown)
+{
+     return {
+       score : function() {return pinsDown.reduce(sum);},
+       roll : function(newPinsDown){
+           return this;            
+       }       
+    }  
+}
 
 function CompleteFrame(pinsDown)
 {   
    return {
        score : function() {return pinsDown.reduce(sum);},
        roll : function(newPinsDown){
-            if (pinsDown.length === 2 && this.score() === 10)
+            if (this.score() === 10)
             {
-               return new CompleteFrame(pinsDown.concat(newPinsDown));
+               return new ClosedFrame(pinsDown.concat(newPinsDown));
             }
             else
             {
