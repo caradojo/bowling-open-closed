@@ -1,5 +1,4 @@
 var _ = require('lodash')
-var FramesTypes = require('../src/FramesTypes')
 
 function sum(a,b)
 {
@@ -27,12 +26,21 @@ function IncompleteFrame(pinsDown)
     }  
 }
 
+
+
 function CompleteFrame(pinsDown)
 {   
    return {
        score : function() {return pinsDown.reduce(sum);},
        roll : function(newPinsDown){
-           return this;
+            if (pinsDown.length === 2 && this.score() === 10)
+            {
+               return new CompleteFrame(pinsDown.concat(newPinsDown));
+            }
+            else
+            {
+                return this;
+            }
        }       
     }  
 }
@@ -43,5 +51,7 @@ function FramesTypes()
 }
 
 FramesTypes.EmptyFrame = EmptyFrame;
+FramesTypes.IncompleteFrame = IncompleteFrame;
+FramesTypes.CompleteFrame = CompleteFrame;
 
 module.exports = FramesTypes

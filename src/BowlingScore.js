@@ -6,11 +6,6 @@ function BowlingScore(frames) {
     this.allFrames = frames
 }
 
-function sum(a,b)
-{
-    return a+b
-}
-
 BowlingScore.prototype = {
 
     roll: function (pinsKnockedDown) {

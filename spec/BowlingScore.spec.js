@@ -23,12 +23,12 @@ describe('bowling', function () {
         expect(scoreFor("12 3")).to.equal(6)    
     })
 
- /*   it('adds following roll when spare', function () {
+    it('adds following roll when spare', function () {
         expect(scoreFor("46 33 00 00 00 00 00 00 00 00")).to.equal(13 + 6)
         expect(scoreFor("42 81 00 00 00 00 00 00 00 00")).to.equal(6 + 9)
-        expect(scoreFor("46 3")).to.equal(13+3)  
+        expect(scoreFor("46 3")).to.equal(16)  
     })
-
+/*
     it('strike', function () {
         expect(scoreFor("60 30 X0 45 00 00 00 00 00 00")).to.equal(6+ 3 + 19 + 9)        
     })
