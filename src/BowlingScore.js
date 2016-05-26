@@ -1,16 +1,68 @@
 var _ = require('lodash')
 
-function BowlingScore(currentScore, allRolls, allFrames, currentFrame) {
-    this.currentScore = currentScore
-    this.allRolls = allRolls
-    this.allFrames = allFrames
-    this.currentFrame = currentFrame
-    this.rollTypes = [
-        strikeCalculator(currentScore),
-        spareCalculator(currentScore),
-        normalCalculator(currentScore)]
+function BowlingScore(frames) {    
+    this.allFrames = frames
 }
 
+function sum(a,b)
+{
+    return a+b
+}
+
+function EmptyFrame()
+{
+    return {
+       score : function() {return 0;},
+       roll : function(pinsDown){
+           return new IncompleteFrame([pinsDown])
+       }
+       
+    }
+}
+
+function IncompleteFrame(pinsDown)
+{   
+   return {
+       score : function() {return pinsDown.reduce(sum);},
+       roll : function(newPinsDown){
+           return [new CompleteFrame(pinsDown.concat(newPinsDown)), new EmptyFrame()];
+       }       
+    }  
+}
+
+function CompleteFrame(pinsDown)
+{   
+   return {
+       score : function() {return pinsDown.reduce(sum);},
+       roll : function(newPinsDown){
+           return this;
+       }       
+    }  
+}
+
+BowlingScore.prototype = {
+
+    roll: function (pinsKnockedDown) {
+        
+        var newAllFrames = [];
+        for (var i = 0; i < this.allFrames.length; i++)
+        {
+            newAllFrames = newAllFrames.concat(this.allFrames[i].roll(pinsKnockedDown));
+        }
+        
+        return new BowlingScore(newAllFrames);      
+    },
+
+    score: function () {
+        var sum = 0;
+        for (var i = 0; i < this.allFrames.length; i++)
+        {
+            sum = sum + this.allFrames[i].score();
+        } 
+        return sum;
+    }
+}
+/*
 function EmptyFrame() {
     return {
         roll: function (pinsKnockedDown) {
@@ -134,5 +186,6 @@ function normalCalculator(currentScore) {
 
 BowlingScore.spareCalculator = spareCalculator
 BowlingScore.EmptyFrame = EmptyFrame
-
+*/
+BowlingScore.EmptyFrame = EmptyFrame
 module.exports = BowlingScore
