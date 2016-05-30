@@ -42,7 +42,7 @@ public class RollStateMachineTest {
   public void getSpareEvent() {
     // given
     final RollResult rollResult = new RollResult();
-    RollEvents.getInstance().register(
+    rollStateMachine.register(
             (event, first, second) -> rollResult.set(event, first, second)
     );
     // when

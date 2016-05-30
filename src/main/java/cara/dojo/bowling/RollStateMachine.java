@@ -19,4 +19,8 @@ class RollStateMachine {
       state.updateState(second, first);
     }
   }
+
+  void register(RollEventListener listener) {
+    //this.listener = listener;
+  }
 }
