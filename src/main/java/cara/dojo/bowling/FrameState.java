@@ -4,7 +4,34 @@ import static cara.dojo.bowling.FrameState.State.*;
 
 class FrameState {
   enum State {
-    EMPTY, FIRST, STRIKE, SECOND, SPARE
+    EMPTY {
+      @Override
+      int computeScore(Frame currentFrame) {
+        return 0;
+      }
+    }, FIRST {
+      @Override
+      int computeScore(Frame currentFrame) {
+        return 0;
+      }
+    }, STRIKE {
+      @Override
+      int computeScore(Frame currentFrame) {
+        return 10 + currentFrame.getFirst() + currentFrame.getSecond();
+      }
+    }, SECOND {
+      @Override
+      int computeScore(Frame currentFrame) {
+        return 0;
+      }
+    }, SPARE {
+      @Override
+      int computeScore(Frame currentFrame) {
+        return 0;
+      }
+    };
+
+    abstract int computeScore(Frame currentFrame);
   }
   @FunctionalInterface
   private interface FrameStateUpdate {
