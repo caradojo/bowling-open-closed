@@ -12,11 +12,18 @@ describe('bowling', function () {
     it('adds following roll when spare', function () {
         expect(scoreFor("46 33 00 00 00 00 00 00 00 00")).to.equal(13 + 6)
         expect(scoreFor("42 81 00 00 00 00 00 00 00 00")).to.equal(6 + 9)
+        expect(scoreFor("00 00 00 00 00 00 00 00 00 64")).to.equal(10) // should be 0 at the end
+        //expect(scoreFor("00 00 00 00 00 00 00 00 00 649")).to.equal(19)
     })
 
     it('strike', function () {
         expect(scoreFor("60 30 X 45 00 00 00 00 00 00")).to.equal(6+ 3 + 19 + 9)
         expect(scoreFor("00 00 00 00 00 00 00 00 00 XXX")).to.equal(30)
+    })
+
+    it('ttoto', function() {
+        expect(makeRollsFromStringRepresentation("00 649"))
+            .to.deep.equal([0, 0, 6, 4, 9])
     })
 
     function parseToInteger(n) {
@@ -26,8 +33,12 @@ describe('bowling', function () {
         return Number.parseInt(n)
     }
 
+    function makeRollsFromStringRepresentation(rolls) {
+        return rolls.replace(/ /g, "").split('').map(parseToInteger)
+    }
+
     function scoreFor(rolls) {
-        var allRolls = rolls.replace(/ /g, "").split('').map(parseToInteger)
+        var allRolls = makeRollsFromStringRepresentation(rolls)
         return BowlingScore.totalScore(allRolls)
     }
 })

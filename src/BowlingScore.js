@@ -26,7 +26,7 @@ function recursiveFrameScore(remainingRolls) {
 
 function totalScore(allRolls) {
     var framesScores = recursiveFrameScore(allRolls)
-    return framesScores.reduce(sum)
+    return framesScores.reduce((a, b) => a + b)
 }
 
 BowlingScore.totalScore = totalScore

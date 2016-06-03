@@ -26,7 +26,13 @@ function spareFrame() {
         return rolls[0] + rolls[1] == 10
     }
     function calculateSpare(rolls) {
-        var frameScore = 10 + rolls[2]
+        var frameScore;
+        if (rolls[2]) {
+            frameScore = 10 + rolls[2];
+        } else {
+            frameScore = 10
+        }
+
         var nextRolls = _.drop(rolls, 2);
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
