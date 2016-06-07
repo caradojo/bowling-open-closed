@@ -11,12 +11,12 @@ function StrikeFrame(pinsDown)
        score : function() {return pinsDown.reduce(sum)},
        roll : function(newPinsDown){
            var newPinsArray = pinsDown.concat(newPinsDown);
-           if (newPinsArray.length < 3)
+           if (newPinsArray.length < 4)
            {
                return new StrikeFrame(newPinsArray);
            }
            else{
-               return new CompleteFrame(newPinsArray)
+               return this
            }
        }
        
