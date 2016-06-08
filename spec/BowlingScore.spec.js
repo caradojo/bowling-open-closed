@@ -20,8 +20,13 @@ describe('bowling', function () {
         expect(scoreFor("60 30 X 45 00 00 00 00 00 00")).to.equal(6+ 3 + 19 + 9)
         expect(scoreFor("00 00 00 00 00 00 00 00 00 XXX")).to.equal(30)
     })
+    
+    it('returns a list of frames', function() {
+        var spareInTheEnd = "00 00 00 00 00 00 00 00 00 64"
+        expect(BowlingScore.framesFor(makeRollsFromStringRepresentation(spareInTheEnd))).to.deep.equal([0, 0, 0, 0, 0, 0 ,0 , 0, 0, 10])
+    })
 
-    it('ttoto', function() {
+    it('helper function works', function() {
         expect(makeRollsFromStringRepresentation("00 649"))
             .to.deep.equal([0, 0, 6, 4, 9])
     })

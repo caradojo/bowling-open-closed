@@ -29,6 +29,8 @@ function totalScore(allRolls) {
     return framesScores.reduce((a, b) => a + b)
 }
 
+BowlingScore.framesFor = recursiveFrameScore
+
 BowlingScore.totalScore = totalScore
 
 module.exports = BowlingScore
