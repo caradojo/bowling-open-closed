@@ -2,6 +2,7 @@ var _ = require('lodash')
 var FrameTypes = require('./FrameTypes')
 var strikeFrame = FrameTypes.strikeFrame
 var strikeInLastFrame = FrameTypes.strikeInLastFrame
+var spareInLastFrame = FrameTypes.spareInLastFrame
 var spareFrame = FrameTypes.spareFrame
 var normalFrame = FrameTypes.normalFrame
 
@@ -16,7 +17,7 @@ function sum(a, b) {
 function recursiveFrameScore(remainingRolls) {
     if (remainingRolls.length === 0) return []
 
-    var allFrameTypes = [strikeInLastFrame(), strikeFrame(), spareFrame(), normalFrame()]
+    var allFrameTypes = [strikeInLastFrame(), strikeFrame(), spareInLastFrame(), spareFrame(), normalFrame()]
     var frameType = FrameTypes.findFrameType(allFrameTypes, remainingRolls)
 
     var scoreAndNextRolls = frameType.calculateScore(remainingRolls)

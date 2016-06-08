@@ -30,6 +30,21 @@ function strikeInLastFrame() {
     }
 }
 
+function spareInLastFrame() {
+    function isSpare(rolls) {
+        var isLastFrame = rolls[3] === undefined
+        return isLastFrame && rolls[0] + rolls[1] == 10
+    }
+    function calculateSpare(rolls) {
+        var frameScore = 10 + rolls[2]
+        var nextRolls = _.drop(rolls, 3)
+        return scoreAndRemainingRolls(frameScore, nextRolls)
+    }
+    return {
+        matches: isSpare,
+        calculateScore: calculateSpare
+    }
+}
 
 function spareFrame() {
     function isSpare(rolls) {
@@ -37,14 +52,7 @@ function spareFrame() {
     }
     function calculateSpare(rolls) {
         var frameScore = 10 + rolls[2]
-        var nextRolls;
-        var isLastFrame = rolls[3] === undefined
-        if (isLastFrame) {
-            nextRolls = _.drop(rolls, 3);
-        } else {
-            nextRolls = _.drop(rolls, 2);
-        }
-
+        var nextRolls = _.drop(rolls, 2)
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
     return {
@@ -79,8 +87,9 @@ function findFrameType(allFrameType, rolls) {
 }
 
 module.exports = {
-    strikeFrame: strikeFrame,
     strikeInLastFrame: strikeInLastFrame,
+    strikeFrame: strikeFrame,
+    spareInLastFrame: spareInLastFrame,
     spareFrame: spareFrame,
     normalFrame: normalFrame,
     findFrameType: findFrameType
