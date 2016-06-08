@@ -12,8 +12,8 @@ describe('bowling', function () {
     it('adds following roll when spare', function () {
         expect(scoreFor("46 33 00 00 00 00 00 00 00 00")).to.equal(13 + 6)
         expect(scoreFor("42 81 00 00 00 00 00 00 00 00")).to.equal(6 + 9)
-        expect(scoreFor("00 00 00 00 00 00 00 00 00 64")).to.equal(10) // should be 0 at the end
-        //expect(scoreFor("00 00 00 00 00 00 00 00 00 649")).to.equal(19)
+        expect(scoreFor("00 00 00 00 00 00 00 00 00 640")).to.equal(10)
+        expect(scoreFor("00 00 00 00 00 00 00 00 00 649")).to.equal(19)
     })
 
     it('strike', function () {
@@ -22,8 +22,8 @@ describe('bowling', function () {
     })
     
     it('returns a list of frames', function() {
-        var spareInTheEnd = "00 00 00 00 00 00 00 00 00 64"
-        expect(BowlingScore.framesFor(makeRollsFromStringRepresentation(spareInTheEnd))).to.deep.equal([0, 0, 0, 0, 0, 0 ,0 , 0, 0, 10])
+        var spareInTheEnd = "00 00 00 00 00 00 00 00 00 649"
+        expect(BowlingScore.framesFor(makeRollsFromStringRepresentation(spareInTheEnd))).to.deep.equal([0, 0, 0, 0, 0, 0 ,0 , 0, 0, 19])
     })
 
     it('helper function works', function() {
