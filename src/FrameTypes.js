@@ -5,14 +5,8 @@ function strikeFrame() {
         return rolls[0] == 10
     }
     function applyStrike(rolls) {
-        var nextRolls;
         var frameScore = 10 + rolls[1] + rolls[2]
-        if (rolls[3] === undefined) {
-            nextRolls = _.drop(rolls, 3);
-        }
-        else {
-            nextRolls = _.drop(rolls, 1);
-        }
+        var nextRolls = _.drop(rolls, 1);
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
     return {
@@ -20,6 +14,22 @@ function strikeFrame() {
         calculateScore: applyStrike
     }
 }
+
+function strikeInLastFrame() {
+    function isStrike(rolls) {
+        return rolls[3] === undefined && rolls[0] == 10
+    }
+    function applyStrike(rolls) {
+        var frameScore = 10 + rolls[1] + rolls[2]
+        var nextRolls = _.drop(rolls, 3)
+        return scoreAndRemainingRolls(frameScore, nextRolls)
+    }
+    return {
+        matches: isStrike,
+        calculateScore: applyStrike
+    }
+}
+
 
 function spareFrame() {
     function isSpare(rolls) {
@@ -70,6 +80,7 @@ function findFrameType(allFrameType, rolls) {
 
 module.exports = {
     strikeFrame: strikeFrame,
+    strikeInLastFrame: strikeInLastFrame,
     spareFrame: spareFrame,
     normalFrame: normalFrame,
     findFrameType: findFrameType
