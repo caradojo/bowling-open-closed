@@ -31,7 +31,11 @@ describe('bowling', function () {
         expect(framesFor("46 00 00 00 00 00 00 00 00 00")).to.deep.equal([10, 0, 0, 0, 0, 0 ,0 , 0, 0, 0])
 
         var doubleStrikeInLastFrame = "00 00 00 00 00 00 00 00 00 XX0"
-        //expect(framesFor(doubleStrikeInLastFrame)).to.deep.equal([0, 0, 0, 0, 0, 0 ,0 , 0, 0, 20])
+        expect(framesFor(doubleStrikeInLastFrame)).to.deep.equal([0, 0, 0, 0, 0, 0 ,0 , 0, 0, 20])
+        expect(framesFor("00 00 00 00 00 00 00 00 00 XXX")).to.deep.equal([0, 0, 0, 0, 0, 0 ,0 , 0, 0, 30])
+        expect(framesFor("X 00 00 00 00 00 00 00 00 00")).to.deep.equal([10, 0, 0, 0, 0, 0 ,0 , 0, 0, 0])
+        expect(framesFor("X X 00 00 00 00 00 00 00 00")).to.deep.equal([20, 10, 0, 0, 0, 0 ,0 , 0, 0, 0])
+
     })
 
     it('helper function works', function() {
