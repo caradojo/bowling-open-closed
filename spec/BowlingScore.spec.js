@@ -28,6 +28,8 @@ describe('bowling', function () {
     it('returns a list of frames', function() {
         var spareInTheEnd = "00 00 00 00 00 00 00 00 00 649"
         expect(framesFor(spareInTheEnd)).to.deep.equal([0, 0, 0, 0, 0, 0 ,0 , 0, 0, 19])
+        expect(framesFor("46 00 00 00 00 00 00 00 00 00")).to.deep.equal([10, 0, 0, 0, 0, 0 ,0 , 0, 0, 0])
+
         var doubleStrikeInLastFrame = "00 00 00 00 00 00 00 00 00 XX0"
         //expect(framesFor(doubleStrikeInLastFrame)).to.deep.equal([0, 0, 0, 0, 0, 0 ,0 , 0, 0, 20])
     })

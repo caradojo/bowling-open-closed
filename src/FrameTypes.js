@@ -28,7 +28,7 @@ function spareFrame() {
     function calculateSpare(rolls) {
         var frameScore = 10 + rolls[2]
         var nextRolls;
-        var isLastFrame = !rolls[3]
+        var isLastFrame = rolls[3] === undefined
         if (isLastFrame) {
             nextRolls = _.drop(rolls, 3);
         } else {
