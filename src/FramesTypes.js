@@ -5,8 +5,6 @@ function sum(a,b)
     return a+b
 }
 
-
-
 function ConcatFrame(pinsDown)
 {
     return {
@@ -25,27 +23,42 @@ function ConcatFrame(pinsDown)
     } 
 }
 
-function CurrentFrame(pinsDownArray)
-{   
-    function nextFrame(newPinsDown)
-    {
-        var newArray = pinsDownArray.concat(newPinsDown)
-        if (newArray.reduce(sum) === 10)
-        {
-            return [new ConcatFrame(newArray), new CurrentFrame([])]
-        }
-       
-        if (newArray.length == 2)
-        {        
-            return [new CompleteFrame(newArray),new CurrentFrame([])]
-        }  
+function frameFactory(pinsDownArray)
+{
+   function isSpecial(pinsDownArray)
+   {
+       return pinsDownArray.reduce(sum) === 10
+   }
+   function isComplete(pinsDownArray)
+   {
+       return pinsDownArray.length == 2
+   }
+   var rules = [
+      {
+          match : function(pinsDownArray) { return isSpecial(pinsDownArray)},
+          createFrames : function(pinsDownArray) { return [new ConcatFrame(pinsDownArray), new CurrentFrame([])]}
+      },
+      {
+          match : function(pinsDownArray) { return isComplete(pinsDownArray)},
+          createFrames : function(pinsDownArray) { return [new CompleteFrame(pinsDownArray),new CurrentFrame([])]}
+      },
+      {
+          match : function(pinsDownArray) { return true},
+          createFrames : function(pinsDownArray) { return new CurrentFrame(pinsDownArray)}
+      },
+   ]
+   function matchesCurrentFrame (rule) {
+       return rule.match(pinsDownArray)
+   }
+   return  _.find(rules, matchesCurrentFrame).createFrames(pinsDownArray)
+}
 
-        return new CurrentFrame(newArray)
-    }
+function CurrentFrame(pinsDownArray)
+{       
    return {
        score : function() {return pinsDownArray.reduce(sum, 0);},
        roll : function(newPinsDown){
-           return nextFrame(newPinsDown);
+           return frameFactory(pinsDownArray.concat(newPinsDown));
        }       
     }  
 }
