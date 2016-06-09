@@ -44,7 +44,7 @@ function frameFactory(pinsDownArray)
       },
       {
           match : function(pinsDownArray) { return true},
-          createFrames : function(pinsDownArray) { return new CurrentFrame(pinsDownArray)}
+          createFrames : function(pinsDownArray) { return [new CurrentFrame(pinsDownArray)]}
       },
    ]
    function matchesCurrentFrame (rule) {
