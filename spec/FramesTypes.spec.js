@@ -3,7 +3,6 @@ var FramesTypes = require('../src/FramesTypes')
 var EmptyFrame = FramesTypes.EmptyFrame
 var IncompleteFrame = FramesTypes.IncompleteFrame
 var CompleteFrame = FramesTypes.CompleteFrame
-var SpareFrame = FramesTypes.SpareFrame;
 var _ = require('lodash')
 
 describe('bowling frames', function () {
@@ -29,18 +28,5 @@ describe('bowling frames', function () {
         expect(f1.score() ).to.equal(7)        
         
     })
-    
-    it('spare frames', function () { 
-        var init = [6,4]      
-        var f1 = new SpareFrame(init)
-        expect(f1.score() ).to.equal(10)
-        expect(f1.roll(3).score() ).to.equal(13)       
-        
-        var empty = new EmptyFrame();
-        var i = empty.roll(6);
-        var c = i.roll(4)[0];  
-        var s =  c.roll(3);           
-         expect(s.score() ).to.equal(13)         
-    })   
     
 })

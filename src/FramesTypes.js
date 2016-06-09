@@ -5,7 +5,7 @@ function sum(a,b)
     return a+b
 }
 
-function StrikeFrame(pinsDown)
+function ConcatFrame(pinsDown)
 {
     return {
        score : function() {return pinsDown.reduce(sum)},
@@ -13,7 +13,7 @@ function StrikeFrame(pinsDown)
            var newPinsArray = pinsDown.concat(newPinsDown);
            if (newPinsArray.length < 4)
            {
-               return new StrikeFrame(newPinsArray);
+               return new ConcatFrame(newPinsArray);
            }
            else{
                return this
@@ -30,7 +30,7 @@ function EmptyFrame()
        roll : function(pinsDown){
            if (pinsDown === 10)
            {
-               return [new StrikeFrame([pinsDown]),new EmptyFrame()];
+               return [new ConcatFrame([pinsDown]),new EmptyFrame()];
            }
            else
            {
@@ -48,7 +48,7 @@ function IncompleteFrame(pinsDown)
         var newArray = pinsDown.concat(newPinsDown)
         if (newArray.reduce(sum) === 10)
         {
-            return new SpareFrame(newArray)
+            return new ConcatFrame(newArray)
         }
         else
         {
@@ -73,15 +73,6 @@ function CompleteFrame(pinsDown)
     }  
 }
 
-function SpareFrame(pinsDown)
-{   
-   return {
-       score : function() {return pinsDown.reduce(sum);},
-       roll : function(newPinsDown){
-            return new CompleteFrame(pinsDown.concat(newPinsDown));            
-       }       
-    }  
-}
 
 function FramesTypes()
 {
@@ -91,6 +82,5 @@ function FramesTypes()
 FramesTypes.EmptyFrame = EmptyFrame;
 FramesTypes.IncompleteFrame = IncompleteFrame;
 FramesTypes.CompleteFrame = CompleteFrame;
-FramesTypes.SpareFrame = SpareFrame;
 
 module.exports = FramesTypes
