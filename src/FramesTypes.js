@@ -48,17 +48,20 @@ function IncompleteFrame(pinsDown)
         var newArray = pinsDown.concat(newPinsDown)
         if (newArray.reduce(sum) === 10)
         {
-            return new ConcatFrame(newArray)
+            return [new ConcatFrame(newArray), new EmptyFrame()]
         }
-        else
-        {
-            return new CompleteFrame(newArray)   
-        }               
+       
+        if (newArray.length == 2)
+        {        
+            return [new CompleteFrame(newArray), new EmptyFrame()]
+        }  
+
+        return new IncompleteFrame(newPinsDown)
     }
    return {
        score : function() {return pinsDown.reduce(sum);},
        roll : function(newPinsDown){
-           return [nextFrame(newPinsDown), new EmptyFrame()];
+           return nextFrame(newPinsDown);
        }       
     }  
 }
