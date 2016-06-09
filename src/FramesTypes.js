@@ -5,14 +5,16 @@ function sum(a,b)
     return a+b
 }
 
+
+
 function ConcatFrame(pinsDown)
 {
     return {
        score : function() {return pinsDown.reduce(sum)},
        roll : function(newPinsDown){
-           var newPinsArray = pinsDown.concat(newPinsDown);
-           if (newPinsArray.length < 4)
+           if (pinsDown.length < 3)
            {
+                var newPinsArray = pinsDown.concat(newPinsDown);               
                return new ConcatFrame(newPinsArray);
            }
            else{
@@ -38,7 +40,7 @@ function CurrentFrame(pinsDownArray)
             return [new CompleteFrame(newArray),new CurrentFrame([])]
         }  
 
-        return new CurrentFrame([newPinsDown])
+        return new CurrentFrame(newArray)
     }
    return {
        score : function() {return pinsDownArray.reduce(sum, 0);},

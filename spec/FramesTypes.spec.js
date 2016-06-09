@@ -20,7 +20,6 @@ describe('bowling frames', function () {
         var init = [6,1]      
         var f1 = new CompleteFrame(init)
         expect(f1.score() ).to.equal(7)        
-        
     })
     
 })
