@@ -1,6 +1,6 @@
 var expect = require('chai').expect
 var BowlingScore = require('../src/BowlingScore')
-var EmptyFrame = BowlingScore.EmptyFrame
+var CurrentFrame = BowlingScore.CurrentFrame
 var _ = require('lodash')
 
 describe('bowling', function () {
@@ -31,7 +31,7 @@ describe('bowling', function () {
 
         var allRolls = rolls.replace(/ /g, "").split('').map(parseToInteger)
 
-        var finalBowlingScore = allRolls.reduce(accumulateNextScore, new BowlingScore([new EmptyFrame()]))
+        var finalBowlingScore = allRolls.reduce(accumulateNextScore, new BowlingScore([new CurrentFrame([])]))
 
         return finalBowlingScore.score()
 

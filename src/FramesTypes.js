@@ -23,43 +23,25 @@ function ConcatFrame(pinsDown)
     } 
 }
 
-function EmptyFrame()
-{
-    return {
-       score : function() {return 0;},
-       roll : function(pinsDown){
-           if (pinsDown === 10)
-           {
-               return [new ConcatFrame([pinsDown]),new EmptyFrame()];
-           }
-           else
-           {
-               return new IncompleteFrame([pinsDown])
-           }
-       }
-       
-    }
-}
-
-function IncompleteFrame(pinsDown)
+function CurrentFrame(pinsDownArray)
 {   
     function nextFrame(newPinsDown)
     {
-        var newArray = pinsDown.concat(newPinsDown)
+        var newArray = pinsDownArray.concat(newPinsDown)
         if (newArray.reduce(sum) === 10)
         {
-            return [new ConcatFrame(newArray), new EmptyFrame()]
+            return [new ConcatFrame(newArray), new CurrentFrame([])]
         }
        
         if (newArray.length == 2)
         {        
-            return [new CompleteFrame(newArray), new EmptyFrame()]
+            return [new CompleteFrame(newArray),new CurrentFrame([])]
         }  
 
-        return new IncompleteFrame(newPinsDown)
+        return new CurrentFrame([newPinsDown])
     }
    return {
-       score : function() {return pinsDown.reduce(sum);},
+       score : function() {return pinsDownArray.reduce(sum, 0);},
        roll : function(newPinsDown){
            return nextFrame(newPinsDown);
        }       
@@ -82,8 +64,7 @@ function FramesTypes()
     
 }
 
-FramesTypes.EmptyFrame = EmptyFrame;
-FramesTypes.IncompleteFrame = IncompleteFrame;
+FramesTypes.CurrentFrame = CurrentFrame;
 FramesTypes.CompleteFrame = CompleteFrame;
 
 module.exports = FramesTypes

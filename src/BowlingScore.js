@@ -1,6 +1,6 @@
 var _ = require('lodash')
 var FramesTypes = require('../src/FramesTypes')
-var EmptyFrame = FramesTypes.EmptyFrame;
+var CurrentFrame = FramesTypes.CurrentFrame;
 
 function BowlingScore(frames) {    
     this.allFrames = frames
@@ -29,5 +29,5 @@ BowlingScore.prototype = {
     }
 }
 
-BowlingScore.EmptyFrame = EmptyFrame
+BowlingScore.CurrentFrame = CurrentFrame
 module.exports = BowlingScore
