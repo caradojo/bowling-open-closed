@@ -22,6 +22,10 @@ describe('bowling', function () {
         expect(scoreFor("60 30 X 45 00 00 00 00 00 00")).to.equal(6+ 3 + 19 + 9)        
     })
 
+    it('perfect game', function () {
+      //  expect(scoreFor("X X X X X X X X X XXX")).to.equal(300)        
+    })
+
    
     function scoreFor(rolls) {
 

@@ -23,7 +23,7 @@ function ConcatFrame(pinsDown)
     } 
 }
 
-function frameFactory(pinsDownArray)
+function FrameFactory()
 {
    function isSpecial(pinsDownArray)
    {
@@ -47,20 +47,26 @@ function frameFactory(pinsDownArray)
           createFrames : function(pinsDownArray) { return [new CurrentFrame(pinsDownArray)]}
       },
    ]
-   function matchesCurrentFrame (rule) {
-       return rule.match(pinsDownArray)
+   return {
+     create:function(pinsDownArray)
+     {
+            function matchesCurrentFrame (rule) {
+            return rule.match(pinsDownArray)
+        }
+        return  _.find(rules, matchesCurrentFrame).createFrames(pinsDownArray)
+     }
    }
-   return  _.find(rules, matchesCurrentFrame).createFrames(pinsDownArray)
 }
 
 function CurrentFrame(pinsDownArray)
 {       
+   var frameFactory = new FrameFactory();
    return {
        score : function() {return pinsDownArray.reduce(sum, 0);},
        roll : function(newPinsDown){
-           return frameFactory(pinsDownArray.concat(newPinsDown));
+           return frameFactory.create(pinsDownArray.concat(newPinsDown));
        }       
-    }  
+    }   
 }
 
 function CompleteFrame(pinsDown)
