@@ -1,37 +1,40 @@
 package cara.dojo.bowling;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static cara.dojo.bowling.FrameState.State.*;
 
 class FrameState {
   enum State {
     EMPTY {
       @Override
-      int computeScore(Frame currentFrame) {
+      int computeScore(Frame thisFrame, Frame nextFrame) {
         return 0;
       }
     }, FIRST {
       @Override
-      int computeScore(Frame currentFrame) {
+      int computeScore(Frame thisFrame, Frame nextFrame) {
         return 0;
       }
     }, STRIKE {
       @Override
-      int computeScore(Frame currentFrame) {
-        return 10 + currentFrame.getFirst() + currentFrame.getSecond();
+      int computeScore(Frame thisFrame, Frame nextFrame) {
+        return 10 + nextFrame.first() + nextFrame.second();
       }
     }, SECOND {
       @Override
-      int computeScore(Frame currentFrame) {
-        return 0;
+      int computeScore(Frame thisFrame, Frame nextFrame) {
+        return thisFrame.first() + thisFrame.second();
       }
     }, SPARE {
       @Override
-      int computeScore(Frame currentFrame) {
-        return 0;
+      int computeScore(Frame thisFrame, Frame nextFrame) {
+        return 10 + nextFrame.first();
       }
     };
 
-    abstract int computeScore(Frame currentFrame);
+    abstract int computeScore(Frame thisFrame, Frame nextFrame);
   }
   @FunctionalInterface
   private interface FrameStateUpdate {
@@ -50,47 +53,62 @@ class FrameState {
   private int firstPins;
   private int secondPins;
 
-  private FrameStateUpdate[] stateUpdates = new FrameStateUpdate[State.values().length];
-  private FrameStateFinished[] stateFinished = {
-          () -> false, () -> false, () -> true, () -> true, () -> true
-  };
-  private FrameBuilder frameBuilders[] = {
-          () -> { throw new IllegalStateException("Frame is empty"); },
-          () -> { throw new IllegalStateException("Frame not finished"); },
-          () -> new Frame(state, firstPins, secondPins),
-          () -> new Frame(state, firstPins, secondPins),
-          () -> new Frame(state, firstPins, secondPins)
-  };
+  private Map<State, FrameStateUpdate> stateUpdates = new HashMap<>();
+  private Map<State, FrameStateFinished> stateFinished = new HashMap<>();
+  private Map<State, FrameBuilder> frameBuilders = new HashMap<>();
 
   FrameState() {
     initStateUpdates();
+    initStateFinished();
+    initFrameBuilders();
   }
 
   void roll(int pins) {
-    state = stateUpdates[state.ordinal()].on(pins);
+    state = stateUpdates.get(state).on(pins);
   }
 
   boolean isFinished() {
-    return stateFinished[state.ordinal()].isFinished();
+    return stateFinished.get(state).isFinished();
   }
 
   Frame frame() {
-    return frameBuilders[state.ordinal()].frame();
+    return frameBuilders.get(state).frame();
   }
 
   private void initStateUpdates() {
-    stateUpdates[EMPTY.ordinal()] =
+    stateUpdates.put(EMPTY,
             (pins) -> {
               firstPins = pins;
               return pins == 10 ? STRIKE : FIRST;
-            };
-    stateUpdates[FIRST.ordinal()] =
+            }
+    );
+    stateUpdates.put(FIRST,
             (pins) -> {
               secondPins = pins;
               return pins + firstPins == 10 ? SPARE : SECOND;
-            };
-    stateUpdates[STRIKE.ordinal()] = (pins) -> STRIKE;
-    stateUpdates[SECOND.ordinal()] = (pins) -> SECOND;
-    stateUpdates[SPARE.ordinal()] = (pins) -> SPARE;
+            }
+    );
+    stateUpdates.put(STRIKE, (pins) -> STRIKE);
+    stateUpdates.put(SECOND, (pins) -> SECOND);
+    stateUpdates.put(SPARE, (pins) -> SPARE);
+  }
+
+  private void initStateFinished() {
+    FrameStateFinished notFinished = () -> false;
+    FrameStateFinished finished = () -> true;
+    stateFinished.put(EMPTY, notFinished);
+    stateFinished.put(FIRST, notFinished);
+    stateFinished.put(STRIKE, finished);
+    stateFinished.put(SECOND, finished);
+    stateFinished.put(SPARE, finished);
+  }
+
+  private void initFrameBuilders() {
+    FrameBuilder endFrameBuilder = () -> new Frame(state, firstPins, secondPins);
+    frameBuilders.put(EMPTY, () -> { throw new IllegalStateException("Frame is empty"); });
+    frameBuilders.put(FIRST, () -> { throw new IllegalStateException("Frame not finished"); });
+    frameBuilders.put(STRIKE, endFrameBuilder);
+    frameBuilders.put(SECOND, endFrameBuilder);
+    frameBuilders.put(SPARE, endFrameBuilder);
   }
 }

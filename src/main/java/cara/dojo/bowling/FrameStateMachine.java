@@ -11,7 +11,7 @@ class FrameStateMachine {
         frameState.roll(pins[i]);
         i++;
       } while(!frameState.isFinished());
-      frames.add(frameState.frame());
+      frames = frames.addFrame(frameState.frame());
     }
     return frames;
   }

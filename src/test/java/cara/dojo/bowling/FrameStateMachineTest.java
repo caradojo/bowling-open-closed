@@ -22,8 +22,8 @@ public class FrameStateMachineTest {
     // when
     Frames frames = frameStateMachine.run( new int[] { 10 } );
     // then
-    Assertions.assertThat(frames).hasSize(1);
-    Assertions.assertThat(frames.get(0).is(FrameState.State.STRIKE, 10, 0)).isTrue();
+    Assertions.assertThat(frames.frames()).hasSize(1);
+    Assertions.assertThat(frames.frames().get(0).is(FrameState.State.STRIKE, 10, 0)).isTrue();
   }
 
   @Test
@@ -32,8 +32,8 @@ public class FrameStateMachineTest {
     // when
     Frames frames = frameStateMachine.run( new int[] { 3, 7 } );
     // then
-    Assertions.assertThat(frames).hasSize(1);
-    Assertions.assertThat(frames.get(0).is(FrameState.State.SPARE, 3, 7)).isTrue();
+    Assertions.assertThat(frames.frames()).hasSize(1);
+    Assertions.assertThat(frames.frames().get(0).is(FrameState.State.SPARE, 3, 7)).isTrue();
   }
 
   @Test
@@ -42,8 +42,8 @@ public class FrameStateMachineTest {
     // when
     Frames frames = frameStateMachine.run( new int[] { 3, 5 } );
     // then
-    Assertions.assertThat(frames).hasSize(1);
-    Assertions.assertThat(frames.get(0).is(FrameState.State.SECOND, 3, 5)).isTrue();
+    Assertions.assertThat(frames.frames()).hasSize(1);
+    Assertions.assertThat(frames.frames().get(0).is(FrameState.State.SECOND, 3, 5)).isTrue();
   }
 
   @Test
@@ -52,9 +52,9 @@ public class FrameStateMachineTest {
     // when
     Frames frames = frameStateMachine.run( new int[] { 3, 5, 4, 6, 10 } );
     // then
-    Assertions.assertThat(frames).hasSize(3);
-    Assertions.assertThat(frames.get(0).is(FrameState.State.SECOND, 3, 5)).isTrue();
-    Assertions.assertThat(frames.get(1).is(FrameState.State.SPARE, 4, 6)).isTrue();
-    Assertions.assertThat(frames.get(2).is(FrameState.State.STRIKE, 10, 0)).isTrue();
+    Assertions.assertThat(frames.frames()).hasSize(3);
+    Assertions.assertThat(frames.frames().get(0).is(FrameState.State.SECOND, 3, 5)).isTrue();
+    Assertions.assertThat(frames.frames().get(1).is(FrameState.State.SPARE, 4, 6)).isTrue();
+    Assertions.assertThat(frames.frames().get(2).is(FrameState.State.STRIKE, 10, 0)).isTrue();
   }
 }
