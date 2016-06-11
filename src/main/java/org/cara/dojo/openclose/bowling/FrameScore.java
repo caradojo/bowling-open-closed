@@ -20,4 +20,8 @@ public class FrameScore {
     return pins.stream().mapToInt(i -> i.intValue()).sum();
   }
 
+  public String name() {
+    throw new UnsupportedOperationException();
+  }
+
 }

@@ -1,19 +1,19 @@
 package org.cara.dojo.openclose.bowling;
 
+import static ch.lambdaj.collection.LambdaCollections.with;
+
+import java.util.List;
+
 import org.fest.assertions.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.googlecode.zohhak.api.Coercion;
 import com.googlecode.zohhak.api.TestWith;
+import com.googlecode.zohhak.api.runners.ZohhakRunner;
 
 import ch.lambdaj.collection.LambdaList;
 import ch.lambdaj.function.convert.Converter;
-import static ch.lambdaj.collection.LambdaCollections.with;
-
-import java.util.List;
-
-import com.googlecode.zohhak.api.runners.ZohhakRunner;
 
 @RunWith(ZohhakRunner.class)
 public class BowlingGameTest {
@@ -36,7 +36,7 @@ public class BowlingGameTest {
                    "[5, 4, 2, 1, 8, 1] ; 21"},
                    separator=";")
   public void score_is_the_sum_of_pins_knocked_down(List<Integer> pinsGame, Integer expectedScore) {
-    //Given
+    // Given
     BowlingGame bowling = new BowlingGame();
     for (int pins : pinsGame) {
       bowling.roll(pins);
@@ -48,6 +48,21 @@ public class BowlingGameTest {
     // Then
     Assertions.assertThat(score).isEqualTo(expectedScore);
   }
+  
+  
+  @Test
+  public void a_strike_is_when_the_player_knocks_down_all_10_pins_on_his_first_try()
+  {
+    // Given
+    BowlingGame bowling = new BowlingGame();
+    
+    // When
+    bowling.roll(10);
+    
+    // Then
+    Assertions.assertThat(bowling.frames.get(1).name()).isEqualTo("Strike");
+  }
+  
   
   
   @Coercion
