@@ -6,7 +6,7 @@ import java.util.List;
 public class FrameScore {
   
   private List<Integer> pins = new ArrayList<Integer>();
-  private DefaultFrame frame = new DefaultFrame();
+  private TwoRollsFrameScore frame = new TwoRollsFrameScore();
   
   public void roll(Integer newPins) {
     

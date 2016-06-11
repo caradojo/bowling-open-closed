@@ -7,12 +7,12 @@ import com.googlecode.zohhak.api.TestWith;
 import com.googlecode.zohhak.api.runners.ZohhakRunner;
 
 @RunWith(ZohhakRunner.class)
-public class DefaultFrameTest {
+public class TwoRollsFrameScoreTest {
 
   @TestWith({"1","2"})
-  public void default_frame_listen_until_two_rolls(Integer nbRolls) {
+  public void listen_new_roll_until_two_rolls(Integer nbRolls) {
     //Given
-    DefaultFrame frame = new DefaultFrame();
+    TwoRollsFrameScore frame = new TwoRollsFrameScore();
     
     // When
     boolean shouldListen = frame.shouldListenRoll(nbRolls);
@@ -22,9 +22,9 @@ public class DefaultFrameTest {
   }
   
   @TestWith({"3","4","8","10","23"})
-  public void default_frame_not_listen_after_two_rolls(Integer nbRolls) {
+  public void not_listen_new_roll_after_two_rolls(Integer nbRolls) {
     //Given
-    DefaultFrame frame = new DefaultFrame();
+    TwoRollsFrameScore frame = new TwoRollsFrameScore();
     
     // When
     boolean shouldListen = frame.shouldListenRoll(nbRolls);
