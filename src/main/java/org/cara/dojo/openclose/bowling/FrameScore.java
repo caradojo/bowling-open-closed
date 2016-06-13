@@ -6,14 +6,17 @@ import java.util.List;
 public class FrameScore {
   
   private List<Integer> pins = new ArrayList<Integer>();
-  private TwoRollsFrameScore frame = new TwoRollsFrameScore();
+  private IFrameScore frame = new TwoRollsFrameScore();
   
   public FrameScore roll(Integer newPins) {
+	if ((pins.size()==0) && (newPins == 10))
+		frame = new StrikeFrameScore();
     
     if (frame.shouldListenRoll(pins.size() +1))
     {
       pins.add(newPins);
     }
+    
     return this;
   }
 
@@ -22,7 +25,7 @@ public class FrameScore {
   }
 
   public String name() {
-    throw new UnsupportedOperationException();
+    return frame.name();
   }
 
 }

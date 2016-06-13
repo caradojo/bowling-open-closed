@@ -1,14 +1,15 @@
 package org.cara.dojo.openclose.bowling;
 
-public class TwoRollsFrameScore implements IFrameScore {
+public class StrikeFrameScore implements IFrameScore {
 
 	@Override
 	public boolean shouldListenRoll(int nbRolls) {
-		return nbRolls < 3;
+		return nbRolls < 2;
 	}
-	
+
 	@Override
 	public String name() {
-		return "TwoRolls";
+		return "Strike";
 	}
+
 }

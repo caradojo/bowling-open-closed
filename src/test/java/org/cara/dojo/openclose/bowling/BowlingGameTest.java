@@ -3,6 +3,7 @@ package org.cara.dojo.openclose.bowling;
 import static ch.lambdaj.collection.LambdaCollections.with;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.fest.assertions.api.Assertions;
 import org.junit.Test;
@@ -47,6 +48,27 @@ public class BowlingGameTest {
     
     // Then
     Assertions.assertThat(score).isEqualTo(expectedScore);
+  }
+  
+  @TestWith(value={"[5, 3]     ; TwoRolls", 
+   		   		   "[10, 5, 3] ; Strike, TwoRolls",
+   		   		   "[4, 6]     ; TwoRolls",
+   		   		   "[4, 6, 10] ; TwoRolls, Strike",
+   		   		   "[10]       ; Strike"},
+   		   		   separator=";")
+  public void a_strike_is_when_the_player_knocks_down_all_10_pins_on_his_first_try(List<Integer> pinsGame, String frameName)
+  {
+	// Given
+	BowlingGame bowling = new BowlingGame();
+	for (int pins : pinsGame) {
+		bowling.roll(pins);
+	}
+	  
+	// When
+	String actualFrameName= bowling.frames.stream().map(frame -> frame.name()).collect(Collectors.joining(", "));
+	
+	// Then
+	Assertions.assertThat(actualFrameName).isEqualTo(frameName);
   }
 
   @Coercion

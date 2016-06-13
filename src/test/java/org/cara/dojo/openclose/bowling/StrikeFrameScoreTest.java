@@ -8,12 +8,12 @@ import com.googlecode.zohhak.api.TestWith;
 import com.googlecode.zohhak.api.runners.ZohhakRunner;
 
 @RunWith(ZohhakRunner.class)
-public class TwoRollsFrameScoreTest {
+public class StrikeFrameScoreTest {
 
-  @TestWith({"1","2"})
-  public void listen_new_roll_until_two_rolls(Integer nbRolls) {
+  @TestWith({"1"})
+  public void listen_new_roll_until_one_rolls(Integer nbRolls) {
     //Given
-    IFrameScore frame = new TwoRollsFrameScore();
+    IFrameScore frame = new StrikeFrameScore();
     
     // When
     boolean shouldListen = frame.shouldListenRoll(nbRolls);
@@ -22,10 +22,10 @@ public class TwoRollsFrameScoreTest {
     Assertions.assertThat(shouldListen).isTrue();
   }
   
-  @TestWith({"3","4","8","10","23"})
-  public void not_listen_new_roll_after_two_rolls(Integer nbRolls) {
+  @TestWith({"2","3","4","8","10","23"})
+  public void not_listen_new_roll_after_one_rolls(Integer nbRolls) {
     //Given
-	  IFrameScore frame = new TwoRollsFrameScore();
+	  IFrameScore frame = new StrikeFrameScore();
     
     // When
     boolean shouldListen = frame.shouldListenRoll(nbRolls);
@@ -35,15 +35,15 @@ public class TwoRollsFrameScoreTest {
   }
   
   @Test
-  public void my_name_is_TwoRolls()
+  public void my_name_is_Strike()
   {
 	//Given
-	IFrameScore frame = new TwoRollsFrameScore();
+	IFrameScore frame = new StrikeFrameScore();
 	
 	// When
 	String name = frame.name();
 	
 	// Then
-	Assertions.assertThat(name).isEqualTo("TwoRolls");
+	Assertions.assertThat(name).isEqualTo("Strike");
   }
 }
