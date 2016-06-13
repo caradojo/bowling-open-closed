@@ -1,6 +1,5 @@
 var _ = require('lodash')
 
-
 function strikeFrame() {
     function matches(rolls) {
         return rolls[0] == 10
@@ -75,18 +74,13 @@ function normalFrame() {
         calculateScore: calculateScore
     }
 }
+
 function isLastFrame(rolls) {
     return rolls[3] === undefined
 }
+
 function scoreAndRemainingRolls(frameScore, nextRolls) {
     return {frameScore: frameScore, nextRolls: nextRolls}
-}
-
-function findFrameType(allFrameType, rolls) {
-    function matchesCurrentFrame(frameType) {
-        return frameType.matches(rolls)
-    }
-    return _.find(allFrameType, matchesCurrentFrame)
 }
 
 module.exports = {
@@ -95,5 +89,4 @@ module.exports = {
     spareInLastFrame: spareInLastFrame,
     spareFrame: spareFrame,
     normalFrame: normalFrame,
-    findFrameType: findFrameType
 }

@@ -1,12 +1,11 @@
 var _ = require('lodash')
-var FrameTypes = require('./FrameTypes')
 
 function BowlingScore(frameTypes) {
 
     function framesFor(remainingRolls) {
         if (remainingRolls.length === 0) return []
 
-        var frameType = FrameTypes.findFrameType(frameTypes, remainingRolls)
+        var frameType = findFirstMatchingFrameType(remainingRolls)
 
         var scoreAndNextRolls = frameType.calculateScore(remainingRolls)
 
@@ -19,14 +18,22 @@ function BowlingScore(frameTypes) {
         return framesScores.reduce(sum)
     }
 
+    function findFirstMatchingFrameType(rolls) {
+        function matchesCurrentFrame(frameType) {
+            return frameType.matches(rolls)
+        }
+        return _.find(frameTypes, matchesCurrentFrame)
+    }
+
+
+    function sum(a, b) {
+        return a + b
+    }
+
     return {
         framesFor: framesFor,
         totalScore: totalScore
     }
-}
-
-function sum(a, b) {
-    return a + b
 }
 
 
