@@ -1,8 +1,6 @@
 var _ = require('lodash')
 
-function isLastFrame(rolls) {
-    return rolls[3] === undefined
-}
+
 function strikeFrame() {
     function matches(rolls) {
         return rolls[0] == 10
@@ -35,8 +33,7 @@ function strikeInLastFrame() {
 
 function spareInLastFrame() {
     function matches(rolls) {
-        var isLastFrame = rolls[3] === undefined
-        return isLastFrame && rolls[0] + rolls[1] == 10
+        return isLastFrame(rolls) && rolls[0] + rolls[1] == 10
     }
     function calculateSpare(rolls) {
         var frameScore = 10 + rolls[2]
@@ -78,7 +75,9 @@ function normalFrame() {
         calculateScore: calculateScore
     }
 }
-
+function isLastFrame(rolls) {
+    return rolls[3] === undefined
+}
 function scoreAndRemainingRolls(frameScore, nextRolls) {
     return {frameScore: frameScore, nextRolls: nextRolls}
 }
