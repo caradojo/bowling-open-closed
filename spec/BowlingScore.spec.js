@@ -1,5 +1,6 @@
 var expect = require('chai').expect
 var BowlingScore = require('../src/BowlingScore')
+var BowlingScoreFactory = require('../src/BowlingScoreFactory')
 var _ = require('lodash')
 
 describe('bowling', function () {
@@ -22,7 +23,7 @@ describe('bowling', function () {
     })
 
     function framesFor(spareInTheEnd) {
-        return BowlingScore.framesFor(makeRollsFromStringRepresentation(spareInTheEnd))
+        return BowlingScoreFactory.normalBowling().framesFor(makeRollsFromStringRepresentation(spareInTheEnd))
     }
 
     it('returns a list of frames', function() {
@@ -56,6 +57,7 @@ describe('bowling', function () {
 
     function scoreFor(rolls) {
         var allRolls = makeRollsFromStringRepresentation(rolls)
-        return BowlingScore.totalScore(allRolls)
+        return BowlingScoreFactory.normalBowling().totalScore(allRolls)
+        //return BowlingScore.totalScore(allRolls)
     }
 })
