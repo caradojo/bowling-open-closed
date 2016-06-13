@@ -1,37 +1,40 @@
 var _ = require('lodash')
 
+function isLastFrame(rolls) {
+    return rolls[3] === undefined
+}
 function strikeFrame() {
-    function isStrike(rolls) {
+    function matches(rolls) {
         return rolls[0] == 10
     }
-    function applyStrike(rolls) {
+    function calculateScore(rolls) {
         var frameScore = 10 + rolls[1] + rolls[2]
         var nextRolls = _.drop(rolls, 1);
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
     return {
-        matches: isStrike,
-        calculateScore: applyStrike
+        matches: matches,
+        calculateScore: calculateScore
     }
 }
 
 function strikeInLastFrame() {
-    function isStrike(rolls) {
-        return rolls[3] === undefined && rolls[0] == 10
+    function matches(rolls) {
+        return isLastFrame(rolls) && rolls[0] == 10
     }
-    function applyStrike(rolls) {
+    function calculateScore(rolls) {
         var frameScore = 10 + rolls[1] + rolls[2]
         var nextRolls = _.drop(rolls, 3)
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
     return {
-        matches: isStrike,
-        calculateScore: applyStrike
+        matches: matches,
+        calculateScore: calculateScore
     }
 }
 
 function spareInLastFrame() {
-    function isSpare(rolls) {
+    function matches(rolls) {
         var isLastFrame = rolls[3] === undefined
         return isLastFrame && rolls[0] + rolls[1] == 10
     }
@@ -41,37 +44,38 @@ function spareInLastFrame() {
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
     return {
-        matches: isSpare,
+        matches: matches,
         calculateScore: calculateSpare
     }
 }
 
 function spareFrame() {
-    function isSpare(rolls) {
+    function matches(rolls) {
         return rolls[0] + rolls[1] == 10
     }
-    function calculateSpare(rolls) {
+    function calculateScore(rolls) {
         var frameScore = 10 + rolls[2]
         var nextRolls = _.drop(rolls, 2)
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
     return {
-        matches: isSpare,
-        calculateScore: calculateSpare
+        matches: matches,
+        calculateScore: calculateScore
     }
 }
 
 function normalFrame() {
-    function calculateNormalScore(rolls) {
+    function matches() {
+        return true
+    }
+    function calculateScore(rolls) {
         var frameScore = rolls[0] + rolls[1];
         var nextRolls = _.drop(rolls, 2);
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
     return {
-        matches: function () {
-            return true
-        },
-        calculateScore: calculateNormalScore
+        matches: matches,
+        calculateScore: calculateScore
     }
 }
 
