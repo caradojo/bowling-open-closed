@@ -25,7 +25,6 @@ function BowlingScore(frameTypes) {
         return _.find(frameTypes, matchesCurrentFrame)
     }
 
-
     function sum(a, b) {
         return a + b
     }
