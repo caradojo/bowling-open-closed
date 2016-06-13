@@ -2,6 +2,7 @@ package org.cara.dojo.openclose.bowling;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BowlingGame {
 
@@ -14,7 +15,7 @@ public class BowlingGame {
     }
     nbRolls++;
 
-    frames.stream().forEach(f -> f.roll(newPins));
+    frames = frames.stream().map(frame -> frame.roll(newPins)).collect(Collectors.toList());
   }
 
   public Integer score() {

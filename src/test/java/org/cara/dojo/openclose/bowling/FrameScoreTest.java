@@ -23,7 +23,7 @@ public class FrameScoreTest {
     FrameScore frame = new FrameScore();
     
     for (int pins : pinsGame) {
-      frame.roll(pins);
+      frame = frame.roll(pins);
     }
     
     // When

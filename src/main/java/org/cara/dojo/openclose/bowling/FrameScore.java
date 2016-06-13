@@ -8,12 +8,13 @@ public class FrameScore {
   private List<Integer> pins = new ArrayList<Integer>();
   private TwoRollsFrameScore frame = new TwoRollsFrameScore();
   
-  public void roll(Integer newPins) {
+  public FrameScore roll(Integer newPins) {
     
     if (frame.shouldListenRoll(pins.size() +1))
     {
       pins.add(newPins);
     }
+    return this;
   }
 
   public Integer score() {

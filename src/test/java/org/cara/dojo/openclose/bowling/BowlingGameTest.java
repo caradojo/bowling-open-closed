@@ -48,23 +48,7 @@ public class BowlingGameTest {
     // Then
     Assertions.assertThat(score).isEqualTo(expectedScore);
   }
-  
-  
-  @Test
-  public void a_strike_is_when_the_player_knocks_down_all_10_pins_on_his_first_try()
-  {
-    // Given
-    BowlingGame bowling = new BowlingGame();
-    
-    // When
-    bowling.roll(10);
-    
-    // Then
-    Assertions.assertThat(bowling.frames.get(1).name()).isEqualTo("Strike");
-  }
-  
-  
-  
+
   @Coercion
   public LambdaList<Integer> toList(String input) {
     String[] numbers = input.replace("[", "").replace("]", "").split(",");
