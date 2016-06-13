@@ -56,8 +56,7 @@ public class BowlingGameTest {
    		   		   "[4, 6, 10] ; TwoRolls, Strike",
    		   		   "[10]       ; Strike"},
    		   		   separator=";")
-  public void a_strike_is_when_the_player_knocks_down_all_10_pins_on_his_first_try(List<Integer> pinsGame, String frameName)
-  {
+  public void a_strike_is_when_the_player_knocks_down_all_10_pins_on_his_first_try(List<Integer> pinsGame, String frameName){
 	// Given
 	BowlingGame bowling = new BowlingGame();
 	for (int pins : pinsGame) {
@@ -71,6 +70,24 @@ public class BowlingGameTest {
 	Assertions.assertThat(actualFrameName).isEqualTo(frameName);
   }
 
+  @TestWith(value={"[10, 3, 6] ; 28", 
+          "[10, 0, 3] ; 16", 
+          "[10, 5, 0] ; 20"},
+          separator=";")
+  public void strike_score_is_10_plus_the_bonus_of_the_next_two_balls_rolled(List<Integer> pinsGame, Integer expectedScore) {
+	// Given
+	BowlingGame bowling = new BowlingGame();
+	for (int pins : pinsGame) {
+	bowling.roll(pins);
+	}
+	
+	// When
+	int score = bowling.score();
+	
+	// Then
+	Assertions.assertThat(score).isEqualTo(expectedScore);
+  }
+  
   @Coercion
   public LambdaList<Integer> toList(String input) {
     String[] numbers = input.replace("[", "").replace("]", "").split(",");

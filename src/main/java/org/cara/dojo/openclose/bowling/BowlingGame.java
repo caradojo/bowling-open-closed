@@ -7,15 +7,13 @@ import java.util.stream.Collectors;
 public class BowlingGame {
 
   List<FrameScore> frames = new ArrayList<FrameScore>();
-  int nbRolls = 0;
 
   public void roll(Integer newPins) {
-    if (nbRolls % 2 == 0) {
-      frames.add(new FrameScore());
-    }
-    nbRolls++;
+	if (frames.isEmpty() || (frames.get(frames.size()-1).isFinished())) {
+	  frames.add(new FrameScore());
+	}
 
-    frames = frames.stream().map(frame -> frame.roll(newPins)).collect(Collectors.toList());
+	frames.stream().map(frame -> frame.roll(newPins)).collect(Collectors.toList());
   }
 
   public Integer score() {

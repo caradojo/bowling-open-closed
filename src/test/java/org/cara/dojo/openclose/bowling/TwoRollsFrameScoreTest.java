@@ -13,10 +13,10 @@ public class TwoRollsFrameScoreTest {
   @TestWith({"1","2"})
   public void listen_new_roll_until_two_rolls(Integer nbRolls) {
     //Given
-    IFrameScore frame = new TwoRollsFrameScore();
+    IFrameScore twoRollsFrame = new TwoRollsFrameScore();
     
     // When
-    boolean shouldListen = frame.shouldListenRoll(nbRolls);
+    boolean shouldListen = twoRollsFrame.shouldListenRoll(nbRolls);
     
     // Then
     Assertions.assertThat(shouldListen).isTrue();
@@ -25,10 +25,10 @@ public class TwoRollsFrameScoreTest {
   @TestWith({"3","4","8","10","23"})
   public void not_listen_new_roll_after_two_rolls(Integer nbRolls) {
     //Given
-	  IFrameScore frame = new TwoRollsFrameScore();
+	  IFrameScore twoRollsFrame = new TwoRollsFrameScore();
     
     // When
-    boolean shouldListen = frame.shouldListenRoll(nbRolls);
+    boolean shouldListen = twoRollsFrame.shouldListenRoll(nbRolls);
     
     // Then
     Assertions.assertThat(shouldListen).isFalse();
@@ -38,12 +38,36 @@ public class TwoRollsFrameScoreTest {
   public void my_name_is_TwoRolls()
   {
 	//Given
-	IFrameScore frame = new TwoRollsFrameScore();
+	IFrameScore twoRollsFrame = new TwoRollsFrameScore();
 	
 	// When
-	String name = frame.name();
+	String name = twoRollsFrame.name();
 	
 	// Then
 	Assertions.assertThat(name).isEqualTo("TwoRolls");
+  }
+  
+  @TestWith({"1", "2"})
+  public void is_not_finished_until_two_rolls(Integer nbRolls) {
+    //Given
+    IFrameScore twoRollsFrame = new TwoRollsFrameScore();
+    
+    // When
+    boolean isFinished = twoRollsFrame.isFinished(nbRolls);
+    
+    // Then
+    Assertions.assertThat(isFinished).isFalse();
+  }
+  
+  @TestWith({"3","4","8","10","23"})
+  public void is_finished_after_two_rolls(Integer nbRolls) {
+	  //Given
+	  IFrameScore twoRollsFrame = new TwoRollsFrameScore();
+	  
+	  // When
+	  boolean isFinished = twoRollsFrame.isFinished(nbRolls);
+	  
+	  // Then
+	  Assertions.assertThat(isFinished).isTrue();
   }
 }

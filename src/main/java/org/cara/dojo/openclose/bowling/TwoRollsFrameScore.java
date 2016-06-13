@@ -11,4 +11,9 @@ public class TwoRollsFrameScore implements IFrameScore {
 	public String name() {
 		return "TwoRolls";
 	}
+
+	@Override
+	public boolean isFinished(int nbRolls) {
+		return nbRolls > 2;
+	}
 }

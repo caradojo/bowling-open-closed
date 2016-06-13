@@ -9,7 +9,7 @@ public class FrameScore {
   private IFrameScore frame = new TwoRollsFrameScore();
   
   public FrameScore roll(Integer newPins) {
-	if ((pins.size()==0) && (newPins == 10))
+	if ((pins.size()== 0) && (newPins == 10))
 		frame = new StrikeFrameScore();
     
     if (frame.shouldListenRoll(pins.size() +1))
@@ -28,4 +28,7 @@ public class FrameScore {
     return frame.name();
   }
 
+  public boolean isFinished() {
+	return frame.isFinished(pins.size()+1);
+  }
 }

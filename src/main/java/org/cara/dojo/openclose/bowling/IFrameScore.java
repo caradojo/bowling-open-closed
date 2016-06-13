@@ -6,4 +6,6 @@ public interface IFrameScore {
 
 	String name();
 
+	boolean isFinished(int nbRolls);
+
 }
