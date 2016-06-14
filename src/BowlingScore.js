@@ -6,7 +6,6 @@ function BowlingScore(frameTypes) {
         if (remainingRolls.length === 0) return []
 
         var frameType = findFirstMatchingFrameType(remainingRolls)
-
         var scoreAndNextRolls = frameType.calculateScore(remainingRolls)
 
         var nextFrameScores = framesFor(scoreAndNextRolls.nextRolls)

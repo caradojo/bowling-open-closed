@@ -7,7 +7,7 @@ function strikeFrame() {
     function calculateScore(rolls) {
         var frameScore = 10 + rolls[1] + rolls[2]
         var nextRolls = _.drop(rolls, 1);
-        return scoreAndRemainingRolls(frameScore, nextRolls)
+        return {frameScore: frameScore, nextRolls: nextRolls}
     }
     return {
         matches: matches,
