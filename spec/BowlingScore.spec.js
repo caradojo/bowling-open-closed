@@ -23,7 +23,7 @@ describe('bowling', function () {
     })
 
     it('perfect game', function () {
-      //  expect(scoreFor("X X X X X X X X X XXX")).to.equal(300)        
+        //expect(scoreFor("X X X X X X X X X XXX")).to.equal(300)        
     })
 
    

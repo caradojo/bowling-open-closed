@@ -5,6 +5,27 @@ function sum(a,b)
     return a+b
 }
 
+function CurrentFrame(pinsDownArray)
+{       
+   var frameFactory = new FrameFactory();
+   return {
+       score : function() {return pinsDownArray.reduce(sum, 0);},
+       roll : function(newPinsDown){
+           return frameFactory.create(pinsDownArray.concat(newPinsDown));
+       }       
+    }   
+}
+
+function CompleteFrame(pinsDown)
+{
+     return {
+       score : function() {return pinsDown.reduce(sum);},
+       roll : function(newPinsDown){
+           return this;            
+       }       
+    }  
+}
+
 function ConcatFrame(pinsDown)
 {
     return {
@@ -58,26 +79,6 @@ function FrameFactory()
    }
 }
 
-function CurrentFrame(pinsDownArray)
-{       
-   var frameFactory = new FrameFactory();
-   return {
-       score : function() {return pinsDownArray.reduce(sum, 0);},
-       roll : function(newPinsDown){
-           return frameFactory.create(pinsDownArray.concat(newPinsDown));
-       }       
-    }   
-}
-
-function CompleteFrame(pinsDown)
-{
-     return {
-       score : function() {return pinsDown.reduce(sum);},
-       roll : function(newPinsDown){
-           return this;            
-       }       
-    }  
-}
 
 
 function FramesTypes()
