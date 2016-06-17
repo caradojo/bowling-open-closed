@@ -1,32 +1,24 @@
 import * as _ from 'lodash'
 
-function strikeFrame() {
-    function matches(rolls) {
+class strikeFrame {
+    matches(rolls) {
         return rolls[0] == 10
     }
-    function calculateScore(rolls) {
+    calculateScore(rolls) {
         var frameScore = 10 + rolls[1] + rolls[2]
         var nextRolls = _.drop(rolls, 1);
-        return {frameScore: frameScore, nextRolls: nextRolls}
-    }
-    return {
-        matches: matches,
-        calculateScore: calculateScore
+        return scoreAndRemainingRolls(frameScore, nextRolls)
     }
 }
 
-function strikeInLastFrame() {
-    function matches(rolls) {
+class strikeInLastFrame {
+    matches(rolls) {
         return isLastFrame(rolls) && rolls[0] == 10
     }
-    function calculateScore(rolls) {
+    calculateScore(rolls) {
         var frameScore = 10 + rolls[1] + rolls[2]
         var nextRolls = _.drop(rolls, 3)
         return scoreAndRemainingRolls(frameScore, nextRolls)
-    }
-    return {
-        matches: matches,
-        calculateScore: calculateScore
     }
 }
 
