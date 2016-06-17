@@ -87,6 +87,17 @@ class martianSpareInLastFrame {
     }
 }
 
+class martianStrikeInLastFrame {
+    matches(rolls) {
+        return isStrike(rolls) && isLastMartianFrame(rolls)
+    }
+    calculateScore(rolls) {
+        var frameScore = sumOfNext(4, rolls)
+        var nextRolls = _.drop(rolls, 4);
+        return scoreAndRemainingRolls(frameScore, nextRolls)
+    }
+}
+
 
 function isSpare(rolls) {
     return rolls[0] + rolls[1] == 10
@@ -119,5 +130,6 @@ export {
     normalFrame,
     martianNormalFrame,
     martianSpareFrame,
-    martianSpareInLastFrame
+    martianSpareInLastFrame,
+    martianStrikeInLastFrame
 }

@@ -36,6 +36,8 @@ describe('bowling', function () {
         })
         it('adds the two following rolls when strike', function() {
             expect(scoreForMartian("X 423 100 000 000 000 000 000 000 000 000 000")).to.equal(16 + 9 + 1)
+            expect(scoreForMartian("000 000 000 000 000 000 000 000 000 000 000 XXXX")).to.equal(40)
+            expect(scoreForMartian("000 000 000 000 000 000 000 000 000 X X XXXX")).to.equal(30 + 30 + 40)
         })
     })
 
