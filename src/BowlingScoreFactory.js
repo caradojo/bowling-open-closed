@@ -1,12 +1,6 @@
-var BowlingScore = require('./BowlingScore')
-var FrameTypes = require('./FrameTypes')
-var strikeFrame = FrameTypes.strikeFrame
-var strikeInLastFrame = FrameTypes.strikeInLastFrame
-var spareInLastFrame = FrameTypes.spareInLastFrame
-var spareFrame = FrameTypes.spareFrame
-var normalFrame = FrameTypes.normalFrame
-var martianSpareFrame = FrameTypes.martianSpareFrame
-var martianNormalFrame = FrameTypes.martianNormalFrame
+import BowlingScore from './BowlingScore'
+import {strikeFrame, strikeInLastFrame, spareInLastFrame, spareFrame, normalFrame} from './FrameTypes'
+import {martianNormalFrame} from './FrameTypes'
 
 function normalBowling() {
     var allFrameTypes = [new strikeInLastFrame(), new strikeFrame(), new spareInLastFrame(), new spareFrame(), new normalFrame()]
