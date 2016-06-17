@@ -2,8 +2,17 @@ var _ = require('lodash')
 var FramesTypes = require('../src/FramesTypes')
 var CurrentFrame = FramesTypes.CurrentFrame;
 
-function BowlingScore(frames) {    
-    this.allFrames = frames
+function createCurrenFrameIfNeeded(frames){
+        if (frames.length === 0)
+        {
+            return frames.concat(new CurrentFrame([]));
+        }
+        return frames;
+}
+
+
+function BowlingScore(frames) {        
+    this.allFrames = createCurrenFrameIfNeeded(frames);
 }
 
 BowlingScore.prototype = {
