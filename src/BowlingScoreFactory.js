@@ -9,7 +9,7 @@ var martianSpareFrame = FrameTypes.martianSpareFrame
 var martianNormalFrame = FrameTypes.martianNormalFrame
 
 function normalBowling() {
-    var allFrameTypes = [strikeInLastFrame(), strikeFrame(), spareInLastFrame(), spareFrame(), normalFrame()]
+    var allFrameTypes = [strikeInLastFrame(), strikeFrame(), new spareInLastFrame(), new spareFrame(), new normalFrame()]
 
     return new BowlingScore(allFrameTypes)
 }

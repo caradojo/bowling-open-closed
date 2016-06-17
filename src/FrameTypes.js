@@ -30,50 +30,39 @@ function strikeInLastFrame() {
     }
 }
 
-function spareInLastFrame() {
-    function matches(rolls) {
+class spareInLastFrame {
+    matches(rolls) {
         return isLastFrame(rolls) && rolls[0] + rolls[1] == 10
     }
-    function calculateSpare(rolls) {
+    calculateScore(rolls) {
         var frameScore = 10 + rolls[2]
         var nextRolls = _.drop(rolls, 3)
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
-    return {
-        matches: matches,
-        calculateScore: calculateSpare
-    }
 }
 
-function spareFrame() {
-    function matches(rolls) {
+class spareFrame {
+    matches(rolls) {
         return rolls[0] + rolls[1] == 10
     }
-    function calculateScore(rolls) {
+    calculateScore(rolls) {
         var frameScore = 10 + rolls[2]
         var nextRolls = _.drop(rolls, 2)
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
-    return {
-        matches: matches,
-        calculateScore: calculateScore
-    }
 }
 
-function normalFrame() {
-    function matches() {
+class normalFrame {
+    matches() {
         return true
     }
-    function calculateScore(rolls) {
+    calculateScore(rolls) {
         var frameScore = rolls[0] + rolls[1];
         var nextRolls = _.drop(rolls, 2);
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
-    return {
-        matches: matches,
-        calculateScore: calculateScore
-    }
 }
+
 class martianNormalFrame {
     matches() {
         return true
