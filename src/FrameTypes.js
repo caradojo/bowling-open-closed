@@ -5,7 +5,7 @@ class strikeFrame {
         return rolls[0] == 10
     }
     calculateScore(rolls) {
-        var frameScore = 10 + rolls[1] + rolls[2]
+        var frameScore = _.take(rolls, 3).reduce(sum);
         var nextRolls = _.drop(rolls, 1);
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
@@ -16,7 +16,7 @@ class strikeInLastFrame {
         return isLastFrame(rolls) && rolls[0] == 10
     }
     calculateScore(rolls) {
-        var frameScore = 10 + rolls[1] + rolls[2]
+        var frameScore = _.take(rolls, 3).reduce(sum);
         var nextRolls = _.drop(rolls, 3)
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
@@ -27,7 +27,7 @@ class spareInLastFrame {
         return isLastFrame(rolls) && rolls[0] + rolls[1] == 10
     }
     calculateScore(rolls) {
-        var frameScore = 10 + rolls[2]
+        var frameScore = _.take(rolls, 3).reduce(sum);
         var nextRolls = _.drop(rolls, 3)
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
@@ -49,7 +49,7 @@ class normalFrame {
         return true
     }
     calculateScore(rolls) {
-        var frameScore = rolls[0] + rolls[1];
+        var frameScore = _.take(rolls, 2).reduce(sum);
         var nextRolls = _.drop(rolls, 2);
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
@@ -60,12 +60,13 @@ class martianNormalFrame {
         return true
     }
     calculateScore(rolls) {
-        var frameScore = rolls[0] + rolls[1] + rolls[2];
+        var frameScore = _.take(rolls, 3).reduce(sum);
         var nextRolls = _.drop(rolls, 3);
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
 
 }
+function sum(a, b) { return a + b}
 
 function isLastFrame(rolls) {
     return rolls[3] === undefined
