@@ -7,14 +7,16 @@ function sum(a,b)
 
 function CurrentFrame(pinsDownArray)
 {       
-   var frameFactory = new FrameFactory();
-   return {
-       score : function() {return pinsDownArray.reduce(sum, 0);},
+   this.frameFactory = new FrameFactory();
+   this.pinsDownArray = pinsDownArray;
+}
+
+CurrentFrame.prototype = {
+    score : function() {return this.pinsDownArray.reduce(sum, 0);},
        roll : function(newPinsDown){
-           return frameFactory.create(pinsDownArray.concat(newPinsDown));        
+           return this.frameFactory.create(this.pinsDownArray.concat(newPinsDown));        
        },
-        isCurrentFrame : function () { return true;}
-    }   
+       isCurrentFrame : function () { return true;}
 }
 
 function CompleteFrame(pinsDown)

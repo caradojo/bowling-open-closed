@@ -8,11 +8,13 @@ var _ = require('lodash')
 describe('bowling frames', function () {
 
     
-     it('incomplete frames', function () {       
+     it('CurrentFrame frames', function () {       
         var f1 = new CurrentFrame([6])
         expect(f1.score() ).to.equal(6)
         var newFrames = f1.roll(4);
-        expect(newFrames.score()).to.equal(10)      
+        expect(newFrames.score()).to.equal(10)  
+
+        expect(f1 instanceof CurrentFrame).to.equal(true)    
     })
     
     it('complete frames', function () { 

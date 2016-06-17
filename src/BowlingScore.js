@@ -5,7 +5,7 @@ var CurrentFrame = FramesTypes.CurrentFrame;
 
 function lastIsNotCurrentFrame(frames)
 {
-    return frames.length === 0 || !frames[frames.length-1].isCurrentFrame
+    return frames.length === 0 || !(frames[frames.length-1] instanceof CurrentFrame)
 }
 
 function createCurrenFrameIfNeeded(frames){
@@ -30,12 +30,7 @@ BowlingScore.prototype = {
     },
 
     score: function () {
-        var sum = 0;
-        for (var i = 0; i < this.allFrames.length; i++)
-        {
-            sum = sum + this.allFrames[i].score();
-        } 
-        return sum;
+        return this.allFrames.reduce(function(a,b) {return a+b.score() },0)
     }
 }
 
