@@ -12,7 +12,7 @@ describe('bowling frames', function () {
         var f1 = new CurrentFrame([6])
         expect(f1.score() ).to.equal(6)
         var newFrames = f1.roll(4);
-        expect(newFrames[0].score()).to.equal(10)      
+        expect(newFrames.score()).to.equal(10)      
     })
     
     it('complete frames', function () { 

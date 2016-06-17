@@ -14,9 +14,6 @@ function CurrentFrame(pinsDownArray)
            return frameFactory.create(pinsDownArray.concat(newPinsDown));        
        },
         isCurrentFrame : function () { return true;}
-            
-
-
     }   
 }
 
@@ -61,7 +58,7 @@ function FrameFactory()
    var rules = [
       {
           match : function(pinsDownArray) { return isSpecial(pinsDownArray)},
-          createFrames : function(pinsDownArray) { return [new ConcatFrame(pinsDownArray)]}
+          createFrames : function(pinsDownArray) { return new ConcatFrame(pinsDownArray)}
       },
       {
           match : function(pinsDownArray) { return isComplete(pinsDownArray)},
