@@ -11,8 +11,12 @@ function CurrentFrame(pinsDownArray)
    return {
        score : function() {return pinsDownArray.reduce(sum, 0);},
        roll : function(newPinsDown){
-           return frameFactory.create(pinsDownArray.concat(newPinsDown));
-       }       
+           return frameFactory.create(pinsDownArray.concat(newPinsDown));        
+       },
+        isCurrentFrame : function () { return true;}
+            
+
+
     }   
 }
 
@@ -57,11 +61,11 @@ function FrameFactory()
    var rules = [
       {
           match : function(pinsDownArray) { return isSpecial(pinsDownArray)},
-          createFrames : function(pinsDownArray) { return [new ConcatFrame(pinsDownArray), new CurrentFrame([])]}
+          createFrames : function(pinsDownArray) { return [new ConcatFrame(pinsDownArray)]}
       },
       {
           match : function(pinsDownArray) { return isComplete(pinsDownArray)},
-          createFrames : function(pinsDownArray) { return [new CompleteFrame(pinsDownArray),new CurrentFrame([])]}
+          createFrames : function(pinsDownArray) { return [new CompleteFrame(pinsDownArray)]}
       },
       {
           match : function(pinsDownArray) { return true},
