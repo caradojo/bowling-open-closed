@@ -23,7 +23,17 @@ describe('bowling', function () {
         })
     })
 
-    
+    describe('martianRules', function() {
+        it('calculates simple score', function() {
+            expect(scoreForMartian("000 000 000 000 000 000 000 000 000 000 000 000")).to.equal(0)
+            expect(scoreForMartian("123 100 000 000 000 000 000 000 000 000 000 232")).to.equal(6 + 1 + 7)
+        })
+        it.skip('adds following roll when spare', function() {
+            expect(scoreForMartian("127 400 000 000 000 000 000 000 000 000 000 000")).to.equal(14 + 4)
+        })
+    })
+
+
 
     describe('framesFor', function() {
         it('returns a list of frames', function() {
@@ -64,5 +74,9 @@ describe('bowling', function () {
     function scoreFor(rolls) {
         var allRolls = makeRollsFromStringRepresentation(rolls)
         return BowlingScoreFactory.normalBowling().totalScore(allRolls)
+    }
+    function scoreForMartian(rolls) {
+        var allRolls = makeRollsFromStringRepresentation(rolls)
+        return BowlingScoreFactory.martianBowling().totalScore(allRolls)
     }
 })

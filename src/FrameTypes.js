@@ -1,4 +1,4 @@
-var _ = require('lodash')
+import * as _ from 'lodash'
 
 function strikeFrame() {
     function matches(rolls) {
@@ -74,6 +74,17 @@ function normalFrame() {
         calculateScore: calculateScore
     }
 }
+class martianNormalFrame {
+    matches() {
+        return true
+    }
+    calculateScore(rolls) {
+        var frameScore = rolls[0] + rolls[1] + rolls[2];
+        var nextRolls = _.drop(rolls, 3);
+        return scoreAndRemainingRolls(frameScore, nextRolls)
+    }
+
+}
 
 function isLastFrame(rolls) {
     return rolls[3] === undefined
@@ -83,10 +94,11 @@ function scoreAndRemainingRolls(frameScore, nextRolls) {
     return {frameScore: frameScore, nextRolls: nextRolls}
 }
 
-module.exports = {
-    strikeInLastFrame: strikeInLastFrame,
-    strikeFrame: strikeFrame,
-    spareInLastFrame: spareInLastFrame,
-    spareFrame: spareFrame,
-    normalFrame: normalFrame,
+export {
+    strikeInLastFrame,
+    strikeFrame,
+    spareInLastFrame,
+    spareFrame,
+    normalFrame,
+    martianNormalFrame
 }
