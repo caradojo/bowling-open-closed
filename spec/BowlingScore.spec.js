@@ -29,7 +29,10 @@ describe('bowling', function () {
             expect(scoreForMartian("123 100 000 000 000 000 000 000 000 000 000 232")).to.equal(6 + 1 + 7)
         })
         it('adds following roll when spare', function() {
-            expect(scoreForMartian("127 400 000 000 000 000 000 000 000 000 000 000")).to.equal(14 + 4)
+            expect(scoreForMartian("127 410 000 000 000 000 000 000 000 000 000 000")).to.equal(14 + 5)
+            expect(scoreForMartian("370 410 000 000 000 000 000 000 000 000 000 000")).to.equal(14 + 5)
+            //expect(scoreForMartian("000 000 000 000 000 000 000 000 000 000 000 5555")).to.equal(20)
+            expect(scoreForMartian("000 000 000 000 000 000 000 000 000 000 000 5505")).to.equal(15)
         })
         it('adds the two following rolls when strike', function() {
             expect(scoreForMartian("X 423 100 000 000 000 000 000 000 000 000 000")).to.equal(16 + 9 + 1)

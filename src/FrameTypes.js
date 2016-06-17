@@ -76,12 +76,25 @@ class martianSpareFrame {
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
 }
+class martianSpareInLastFrame {
+    matches(rolls) {
+        return sumOfNext(3, rolls) == 10 && isLastMartianFrame(rolls)
+    }
+    calculateScore(rolls) {
+        var frameScore = sumOfNext(4, rolls)
+        var nextRolls = _.drop(rolls, 4);
+        return scoreAndRemainingRolls(frameScore, nextRolls)
+    }
+}
 
 function sumOfNext(number, rolls) {
     return _.take(rolls, number).reduce(sum);
 }
 function sum(a, b) { return a + b}
 
+function isLastMartianFrame(rolls) {
+    return rolls[4] == undefined
+}
 function isLastFrame(rolls) {
     return rolls[3] === undefined
 }
@@ -97,5 +110,6 @@ export {
     spareFrame,
     normalFrame,
     martianNormalFrame,
-    martianSpareFrame
+    martianSpareFrame,
+    martianSpareInLastFrame
 }
