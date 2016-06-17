@@ -28,7 +28,7 @@ describe('bowling', function () {
             expect(scoreForMartian("000 000 000 000 000 000 000 000 000 000 000 000")).to.equal(0)
             expect(scoreForMartian("123 100 000 000 000 000 000 000 000 000 000 232")).to.equal(6 + 1 + 7)
         })
-        it.skip('adds following roll when spare', function() {
+        it('adds following roll when spare', function() {
             expect(scoreForMartian("127 400 000 000 000 000 000 000 000 000 000 000")).to.equal(14 + 4)
         })
     })

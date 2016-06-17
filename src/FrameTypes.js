@@ -64,7 +64,17 @@ class martianNormalFrame {
         var nextRolls = _.drop(rolls, 3);
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
+}
 
+class martianSpareFrame {
+    matches(rolls) {
+        return sumOfNext(3, rolls) == 10
+    }
+    calculateScore(rolls) {
+        var frameScore = sumOfNext(4, rolls)
+        var nextRolls = _.drop(rolls, 3);
+        return scoreAndRemainingRolls(frameScore, nextRolls)
+    }
 }
 
 function sumOfNext(number, rolls) {
@@ -86,5 +96,6 @@ export {
     spareInLastFrame,
     spareFrame,
     normalFrame,
-    martianNormalFrame
+    martianNormalFrame,
+    martianSpareFrame
 }
