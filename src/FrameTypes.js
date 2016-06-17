@@ -78,7 +78,7 @@ class martianSpareFrame {
 }
 class martianSpareInLastFrame {
     matches(rolls) {
-        return sumOfNext(3, rolls) == 10 && isLastMartianFrame(rolls)
+        return sumOfNext(3, rolls) >= 10 && isLastMartianFrame(rolls)
     }
     calculateScore(rolls) {
         var frameScore = sumOfNext(4, rolls)
