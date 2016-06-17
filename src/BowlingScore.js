@@ -1,17 +1,17 @@
 var _ = require('lodash')
 var FramesTypes = require('../src/FramesTypes')
-var CurrentFrame = FramesTypes.CurrentFrame;
+var CurrentPlayedFrame = FramesTypes.CurrentPlayedFrame;
 
 
 function lastIsNotCurrentFrame(frames)
 {
-    return frames.length === 0 || !(frames[frames.length-1] instanceof CurrentFrame)
+    return frames.length === 0 || !(frames[frames.length-1] instanceof CurrentPlayedFrame)
 }
 
 function createCurrenFrameIfNeeded(frames){
-        if (lastIsNotCurrentFrame(frames))
+        if (lastIsNotCurrentFrame(frames) && frames.length < 10)
         {
-            return frames.concat(new CurrentFrame([]));
+            return frames.concat(new CurrentPlayedFrame([]));
         }
         return frames;
 }
@@ -34,5 +34,5 @@ BowlingScore.prototype = {
     }
 }
 
-BowlingScore.CurrentFrame = CurrentFrame
+BowlingScore.CurrentFrame = CurrentPlayedFrame
 module.exports = BowlingScore

@@ -1,20 +1,20 @@
 var expect = require('chai').expect
 var FramesTypes = require('../src/FramesTypes')
 var EmptyFrame = FramesTypes.EmptyFrame
-var CurrentFrame = FramesTypes.CurrentFrame
+var CurrentPlayedFrame = FramesTypes.CurrentPlayedFrame
 var CompleteFrame = FramesTypes.CompleteFrame
 var _ = require('lodash')
 
 describe('bowling frames', function () {
 
     
-     it('CurrentFrame frames', function () {       
-        var f1 = new CurrentFrame([6])
+     it('CurrentPlayedFrame frames', function () {       
+        var f1 = new CurrentPlayedFrame([6])
         expect(f1.score() ).to.equal(6)
         var newFrames = f1.roll(4);
         expect(newFrames.score()).to.equal(10)  
 
-        expect(f1 instanceof CurrentFrame).to.equal(true)    
+        expect(f1 instanceof CurrentPlayedFrame).to.equal(true)    
     })
     
     it('complete frames', function () { 

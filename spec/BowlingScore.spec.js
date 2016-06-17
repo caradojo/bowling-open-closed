@@ -10,7 +10,7 @@ describe('bowling', function () {
         expect(scoreFor("12 34 54 32 10 12 34 54 32 10")).to.equal(50)
         expect(scoreFor("12 3")).to.equal(6)    
 
-    })
+    }) 
 
     it('adds following roll when spare', function () {
         expect(scoreFor("46 33 00 00 00 00 00 00 00 00")).to.equal(13 + 6)
@@ -24,10 +24,9 @@ describe('bowling', function () {
     })
 
     it('perfect game', function () {
-        //expect(scoreFor("X X X X X X X X X XXX")).to.equal(300)                     
+        expect(scoreFor("X X X X X X X X X XXX")).to.equal(300)                     
     })
-
-   
+       
     function scoreFor(rolls) {
 
         function accumulateNextScore(bowlingScore, numberOfPinsKnockedDownInRoll) {

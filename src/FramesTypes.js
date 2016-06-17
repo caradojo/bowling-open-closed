@@ -5,18 +5,17 @@ function sum(a,b)
     return a+b
 }
 
-function CurrentFrame(pinsDownArray)
+function CurrentPlayedFrame(pinsDownArray)
 {       
    this.frameFactory = new FrameFactory();
    this.pinsDownArray = pinsDownArray;
 }
 
-CurrentFrame.prototype = {
+CurrentPlayedFrame.prototype = {
     score : function() {return this.pinsDownArray.reduce(sum, 0);},
-       roll : function(newPinsDown){
-           return this.frameFactory.create(this.pinsDownArray.concat(newPinsDown));        
-       },
-       isCurrentFrame : function () { return true;}
+    roll : function(newPinsDown){
+        return this.frameFactory.create(this.pinsDownArray.concat(newPinsDown));        
+    }
 }
 
 function CompleteFrame(pinsDown)
@@ -49,7 +48,7 @@ function ConcatFrame(pinsDown)
 
 function FrameFactory()
 {
-   function isSpecial(pinsDownArray)
+   function isSpareOrStrike(pinsDownArray)
    {
        return pinsDownArray.reduce(sum) === 10
    }
@@ -59,7 +58,7 @@ function FrameFactory()
    }
    var rules = [
       {
-          match : function(pinsDownArray) { return isSpecial(pinsDownArray)},
+          match : function(pinsDownArray) { return isSpareOrStrike(pinsDownArray)},
           createFrames : function(pinsDownArray) { return new ConcatFrame(pinsDownArray)}
       },
       {
@@ -68,7 +67,7 @@ function FrameFactory()
       },
       {
           match : function(pinsDownArray) { return true},
-          createFrames : function(pinsDownArray) { return new CurrentFrame(pinsDownArray)}
+          createFrames : function(pinsDownArray) { return new CurrentPlayedFrame(pinsDownArray)}
       },
    ]
    return {
@@ -89,7 +88,7 @@ function FramesTypes()
     
 }
 
-FramesTypes.CurrentFrame = CurrentFrame;
+FramesTypes.CurrentPlayedFrame = CurrentPlayedFrame;
 FramesTypes.CompleteFrame = CompleteFrame;
 
 module.exports = FramesTypes
