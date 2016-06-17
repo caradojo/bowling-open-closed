@@ -2,7 +2,6 @@ var _ = require('lodash')
 var FramesTypes = require('../src/FramesTypes')
 var CurrentPlayedFrame = FramesTypes.CurrentPlayedFrame;
 
-
 function lastIsNotCurrentFrame(frames)
 {
     return frames.length === 0 || !(frames[frames.length-1] instanceof CurrentPlayedFrame)
@@ -34,5 +33,4 @@ BowlingScore.prototype = {
     }
 }
 
-BowlingScore.CurrentFrame = CurrentPlayedFrame
 module.exports = BowlingScore

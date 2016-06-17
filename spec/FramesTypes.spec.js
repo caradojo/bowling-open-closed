@@ -6,7 +6,6 @@ var CompleteFrame = FramesTypes.CompleteFrame
 var _ = require('lodash')
 
 describe('bowling frames', function () {
-
     
      it('CurrentPlayedFrame frames', function () {       
         var f1 = new CurrentPlayedFrame([6])
