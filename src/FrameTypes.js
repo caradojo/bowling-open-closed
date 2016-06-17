@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 
 class strikeFrame {
     matches(rolls) {
-        return rolls[0] == 10
+        return isStrike(rolls)
     }
     calculateScore(rolls) {
         var frameScore = sumOfNext(3, rolls);
@@ -13,7 +13,7 @@ class strikeFrame {
 
 class strikeInLastFrame {
     matches(rolls) {
-        return isLastFrame(rolls) && rolls[0] == 10
+        return isLastFrame(rolls) && isStrike(rolls)
     }
     calculateScore(rolls) {
         var frameScore = sumOfNext(3, rolls);
@@ -24,7 +24,7 @@ class strikeInLastFrame {
 
 class spareInLastFrame {
     matches(rolls) {
-        return isLastFrame(rolls) && rolls[0] + rolls[1] == 10
+        return isLastFrame(rolls) && isSpare(rolls)
     }
     calculateScore(rolls) {
         var frameScore = sumOfNext(3, rolls);
@@ -35,7 +35,7 @@ class spareInLastFrame {
 
 class spareFrame {
     matches(rolls) {
-        return rolls[0] + rolls[1] == 10
+        return isSpare(rolls)
     }
     calculateScore(rolls) {
         var frameScore = sumOfNext(3, rolls)
@@ -85,6 +85,14 @@ class martianSpareInLastFrame {
         var nextRolls = _.drop(rolls, 4);
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
+}
+
+
+function isSpare(rolls) {
+    return rolls[0] + rolls[1] == 10
+}
+function isStrike(rolls) {
+    return rolls[0] == 10
 }
 
 function sumOfNext(number, rolls) {
