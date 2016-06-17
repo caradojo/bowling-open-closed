@@ -62,11 +62,11 @@ function FrameFactory()
       },
       {
           match : function(pinsDownArray) { return isComplete(pinsDownArray)},
-          createFrames : function(pinsDownArray) { return [new CompleteFrame(pinsDownArray)]}
+          createFrames : function(pinsDownArray) { return new CompleteFrame(pinsDownArray)}
       },
       {
           match : function(pinsDownArray) { return true},
-          createFrames : function(pinsDownArray) { return [new CurrentFrame(pinsDownArray)]}
+          createFrames : function(pinsDownArray) { return new CurrentFrame(pinsDownArray)}
       },
    ]
    return {

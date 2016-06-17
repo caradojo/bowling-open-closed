@@ -16,7 +16,6 @@ function createCurrenFrameIfNeeded(frames){
         return frames;
 }
 
-
 function BowlingScore(frames) {        
     this.allFrames = createCurrenFrameIfNeeded(frames);
 }
@@ -25,11 +24,7 @@ BowlingScore.prototype = {
 
     roll: function (pinsKnockedDown) {
         
-        var newAllFrames = [];
-        for (var i = 0; i < this.allFrames.length; i++)
-        {
-            newAllFrames = newAllFrames.concat(this.allFrames[i].roll(pinsKnockedDown));
-        }
+        var newAllFrames = this.allFrames.map(function(s) { return s.roll(pinsKnockedDown)});        
         
         return new BowlingScore(createCurrenFrameIfNeeded(newAllFrames));      
     },

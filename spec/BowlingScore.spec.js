@@ -24,14 +24,7 @@ describe('bowling', function () {
     })
 
     it('perfect game', function () {
-        //expect(scoreFor("X X X X X X X X X XXX")).to.equal(300)  
-        function lastIsNotCurrentFrame(frames)
-        {
-            return frames.length === 0 || !frames[frames.length-1].isCurrentFrame
-        }
-        expect(lastIsNotCurrentFrame([])).to.equal(true);
-        expect(lastIsNotCurrentFrame([new CurrentFrame([])])).to.equal(false);
-        expect(lastIsNotCurrentFrame([{}])).to.equal(true);                
+        //expect(scoreFor("X X X X X X X X X XXX")).to.equal(300)                     
     })
 
    
