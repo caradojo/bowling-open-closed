@@ -9,7 +9,7 @@ function normalBowling() {
 
 
 function martianBowling() {
-    var allFrameTypes = [ new martianSpareFrame(), new martianNormalFrame()]
+    var allFrameTypes = [ new strikeFrame(), new martianSpareFrame(), new martianNormalFrame()]
 
     return new BowlingScore(allFrameTypes)
 }
