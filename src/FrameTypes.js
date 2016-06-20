@@ -97,9 +97,9 @@ class martianSpareInLastFrame {
 
 function appliesWhen(predicate1, predicate2, etc) {
     return {
-        scoreTakesRolls: function (numberOfRolls) {
+        sumsUpNextRolls: function (numberOfRolls) {
             return {
-                consistsOfRolls: function (numberOfRollsToRemove) {
+                removesRolls: function (numberOfRollsToRemove) {
                     return {
                         matches: function (rolls) {
                             return predicate1(rolls) && predicate2(rolls)
@@ -118,10 +118,10 @@ function appliesWhen(predicate1, predicate2, etc) {
 
 }
 
-var martiannStrikeInLastFrame =
+var martianStrikeInLastFrame =
     appliesWhen(isStrike, isLastMartianFrame)
-        .scoreTakesRolls(4)
-        .consistsOfRolls(4)
+        .sumsUpNextRolls(4)
+        .removesRolls(4)
 
 function isSpare(rolls) {
     return rolls[0] + rolls[1] == 10
@@ -157,5 +157,5 @@ export {
     martianNormalFrame,
     martianSpareFrame,
     martianSpareInLastFrame,
-    martiannStrikeInLastFrame
+    martianStrikeInLastFrame
 }
