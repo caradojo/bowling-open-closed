@@ -4,6 +4,7 @@ class strikeFrame {
     matches(rolls) {
         return isStrike(rolls)
     }
+
     calculateScore(rolls) {
         var frameScore = sumOfNext(3, rolls);
         var nextRolls = _.drop(rolls, 1);
@@ -15,6 +16,7 @@ class strikeInLastFrame {
     matches(rolls) {
         return isLastFrame(rolls) && isStrike(rolls)
     }
+
     calculateScore(rolls) {
         var frameScore = sumOfNext(3, rolls);
         var nextRolls = _.drop(rolls, 3)
@@ -26,6 +28,7 @@ class spareInLastFrame {
     matches(rolls) {
         return isLastFrame(rolls) && isSpare(rolls)
     }
+
     calculateScore(rolls) {
         var frameScore = sumOfNext(3, rolls);
         var nextRolls = _.drop(rolls, 3)
@@ -37,6 +40,7 @@ class spareFrame {
     matches(rolls) {
         return isSpare(rolls)
     }
+
     calculateScore(rolls) {
         var frameScore = sumOfNext(3, rolls)
         var nextRolls = _.drop(rolls, 2)
@@ -48,6 +52,7 @@ class normalFrame {
     matches() {
         return true
     }
+
     calculateScore(rolls) {
         var frameScore = sumOfNext(2, rolls);
         var nextRolls = _.drop(rolls, 2);
@@ -59,6 +64,7 @@ class martianNormalFrame {
     matches() {
         return true
     }
+
     calculateScore(rolls) {
         var frameScore = sumOfNext(3, rolls)
         var nextRolls = _.drop(rolls, 3);
@@ -70,6 +76,7 @@ class martianSpareFrame {
     matches(rolls) {
         return sumOfNext(3, rolls) == 10
     }
+
     calculateScore(rolls) {
         var frameScore = sumOfNext(4, rolls)
         var nextRolls = _.drop(rolls, 3);
@@ -80,6 +87,7 @@ class martianSpareInLastFrame {
     matches(rolls) {
         return sumOfNext(3, rolls) >= 10 && isLastMartianFrame(rolls)
     }
+
     calculateScore(rolls) {
         var frameScore = sumOfNext(4, rolls)
         var nextRolls = _.drop(rolls, 4);
@@ -87,17 +95,33 @@ class martianSpareInLastFrame {
     }
 }
 
-class martianStrikeInLastFrame {
-    matches(rolls) {
-        return isStrike(rolls) && isLastMartianFrame(rolls)
+function appliesWhen(predicate1, predicate2, etc) {
+    return {
+        scoreTakesRolls: function (numberOfRolls) {
+            return {
+                consistsOfRolls: function (numberOfRollsToRemove) {
+                    return {
+                        matches: function (rolls) {
+                            return predicate1(rolls) && predicate2(rolls)
+                        },
+                        calculateScore: function (rolls) {
+                            var frameScore = sumOfNext(numberOfRolls, rolls)
+                            var nextRolls = _.drop(rolls, numberOfRollsToRemove);
+                            return scoreAndRemainingRolls(frameScore, nextRolls)
+                        }
+                    }
+                }
+            }
+        }
     }
-    calculateScore(rolls) {
-        var frameScore = sumOfNext(4, rolls)
-        var nextRolls = _.drop(rolls, 4);
-        return scoreAndRemainingRolls(frameScore, nextRolls)
-    }
+
+
 }
 
+var martiannStrikeInLastFrame =
+    appliesWhen(isStrike, isLastMartianFrame)
+        .scoreTakesRolls(4)
+        .consistsOfRolls(4)
 
 function isSpare(rolls) {
     return rolls[0] + rolls[1] == 10
@@ -109,7 +133,9 @@ function isStrike(rolls) {
 function sumOfNext(number, rolls) {
     return _.take(rolls, number).reduce(sum);
 }
-function sum(a, b) { return a + b}
+function sum(a, b) {
+    return a + b
+}
 
 function isLastMartianFrame(rolls) {
     return rolls[4] == undefined
@@ -131,5 +157,5 @@ export {
     martianNormalFrame,
     martianSpareFrame,
     martianSpareInLastFrame,
-    martianStrikeInLastFrame
+    martiannStrikeInLastFrame
 }
