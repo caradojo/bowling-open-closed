@@ -83,16 +83,8 @@ class martianSpareFrame {
         return scoreAndRemainingRolls(frameScore, nextRolls)
     }
 }
-class martianSpareInLastFrame {
-    matches(rolls) {
-        return sumOfNext(3, rolls) >= 10 && isLastMartianFrame(rolls)
-    }
-
-    calculateScore(rolls) {
-        var frameScore = sumOfNext(4, rolls)
-        var nextRolls = _.drop(rolls, 4);
-        return scoreAndRemainingRolls(frameScore, nextRolls)
-    }
+function isMartianSpare(rolls) {
+    return sumOfNext(3, rolls) >= 10
 }
 
 function appliesWhen(predicate1, predicate2, etc) {
@@ -114,14 +106,18 @@ function appliesWhen(predicate1, predicate2, etc) {
             }
         }
     }
-
-
 }
 
 var martianStrikeInLastFrame =
     appliesWhen(isStrike, isLastMartianFrame)
         .sumsUpNextRolls(4)
         .removesRolls(4)
+
+var martianSpareInLastFrame =
+    appliesWhen(isMartianSpare, isLastMartianFrame)
+        .sumsUpNextRolls(4)
+        .removesRolls(4)
+
 
 function isSpare(rolls) {
     return rolls[0] + rolls[1] == 10
