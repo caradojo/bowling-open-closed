@@ -23,9 +23,6 @@ function isLastFrame(rolls) {
     return rolls[3] === undefined
 }
 
-function scoreAndRemainingRolls(frameScore, nextRolls) {
-    return {frameScore: frameScore, nextRolls: nextRolls}
-}
 
 function sum(a, b) {
     return a + b
@@ -35,28 +32,37 @@ function always() {
     return true
 }
 
+function FrameType(matchesFn, calculateScoreFn) {
+    return {
+        matches: matchesFn,
+        calculateScore: calculateScoreFn
+    }
+}
+
 function appliesWhen(predicate1, predicate2, etc) {
-    var predicates = Array.prototype.slice.call(arguments);
+    var predicates = Array.prototype.slice.call(arguments)
+    function matches(rolls) {
+        return _.every(predicates, p => p(rolls))
+    }
+
     return {
         sumsUpNextRolls: function (numberOfRolls) {
             return {
                 removesRolls: function (numberOfRollsToRemove) {
-                    return {
-                        matches: function (rolls) {
 
-                            return _.every(predicates, p => p(rolls))
-                        },
-                        calculateScore: function (rolls) {
-                            var frameScore = sumOfNext(numberOfRolls, rolls)
-                            var nextRolls = _.drop(rolls, numberOfRollsToRemove);
-                            return scoreAndRemainingRolls(frameScore, nextRolls)
-                        }
+                    function calculateScore(rolls) {
+                        var frameScore = sumOfNext(numberOfRolls, rolls)
+                        var nextRolls = _.drop(rolls, numberOfRollsToRemove);
+                        return {frameScore: frameScore, nextRolls: nextRolls}
                     }
+
+                    return new FrameType(matches, calculateScore)
                 }
             }
         }
     }
 }
+
 
 var strikeFrame =
     appliesWhen(isStrike)
