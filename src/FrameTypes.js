@@ -10,7 +10,7 @@ function appliesWhen(predicate1, predicate2, etc) {
                     return {
                         matches: function (rolls) {
 
-                            return _.every(predicates, function (p) {return p(rolls)})
+                            return _.every(predicates, p => p(rolls))
                             //return predicate1(rolls) && predicate2(rolls)
                         },
                         calculateScore: function (rolls) {
