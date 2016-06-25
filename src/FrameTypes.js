@@ -72,20 +72,13 @@ class spareFrame {
     }
 }
 
-class normalFrame {
-    matches() {
-        return true
-    }
-
-    calculateScore(rolls) {
-        var frameScore = sumOfNext(2, rolls);
-        var nextRolls = _.drop(rolls, 2);
-        return scoreAndRemainingRolls(frameScore, nextRolls)
-    }
-}
+var normalFrame =
+    appliesWhen(always)
+        .sumsUpNextRolls(2)
+        .removesRolls(2)
 
 var martianNormalFrame =
-    appliesWhen(() => true)
+    appliesWhen(always)
         .sumsUpNextRolls(3)
         .removesRolls(3)
 
@@ -109,7 +102,6 @@ function isMartianSpare(rolls) {
     return sumOfNext(3, rolls) >= 10
 }
 
-
 function isSpare(rolls) {
     return rolls[0] + rolls[1] == 10
 }
@@ -119,9 +111,6 @@ function isStrike(rolls) {
 
 function sumOfNext(number, rolls) {
     return _.take(rolls, number).reduce(sum);
-}
-function sum(a, b) {
-    return a + b
 }
 
 function isLastMartianFrame(rolls) {
@@ -133,6 +122,14 @@ function isLastFrame(rolls) {
 
 function scoreAndRemainingRolls(frameScore, nextRolls) {
     return {frameScore: frameScore, nextRolls: nextRolls}
+}
+
+function sum(a, b) {
+    return a + b
+}
+
+function always() {
+    return true
 }
 
 export {
