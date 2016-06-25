@@ -3,7 +3,7 @@ import {strikeFrame, strikeInLastFrame, spareInLastFrame, spareFrame, normalFram
 import {martianNormalFrame, martianSpareFrame, martianSpareInLastFrame, martianStrikeInLastFrame} from './FrameTypes'
 
 function normalBowling() {
-    var allFrameTypes = [new strikeInLastFrame(), new strikeFrame(), new spareInLastFrame(), new spareFrame(), normalFrame]
+    var allFrameTypes = [new strikeInLastFrame(), new strikeFrame(), spareInLastFrame, spareFrame, normalFrame]
     return new BowlingScore(allFrameTypes)
 }
 

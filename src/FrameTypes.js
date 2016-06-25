@@ -48,29 +48,16 @@ class strikeInLastFrame {
     }
 }
 
-class spareInLastFrame {
-    matches(rolls) {
-        return isLastFrame(rolls) && isSpare(rolls)
-    }
 
-    calculateScore(rolls) {
-        var frameScore = sumOfNext(3, rolls);
-        var nextRolls = _.drop(rolls, 3)
-        return scoreAndRemainingRolls(frameScore, nextRolls)
-    }
-}
+var spareInLastFrame =
+    appliesWhen(isLastFrame, isSpare)
+        .sumsUpNextRolls(3)
+        .removesRolls(3)
 
-class spareFrame {
-    matches(rolls) {
-        return isSpare(rolls)
-    }
-
-    calculateScore(rolls) {
-        var frameScore = sumOfNext(3, rolls)
-        var nextRolls = _.drop(rolls, 2)
-        return scoreAndRemainingRolls(frameScore, nextRolls)
-    }
-}
+var spareFrame =
+    appliesWhen(isSpare)
+        .sumsUpNextRolls(3)
+        .removesRolls(2)
 
 var normalFrame =
     appliesWhen(always)
