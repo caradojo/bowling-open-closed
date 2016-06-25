@@ -2,13 +2,16 @@ import * as _ from 'lodash'
 
 
 function appliesWhen(predicate1, predicate2, etc) {
+    var predicates = Array.prototype.slice.call(arguments);
     return {
         sumsUpNextRolls: function (numberOfRolls) {
             return {
                 removesRolls: function (numberOfRollsToRemove) {
                     return {
                         matches: function (rolls) {
-                            return predicate1(rolls) && predicate2(rolls)
+
+                            return _.every(predicates, function (p) {return p(rolls)})
+                            //return predicate1(rolls) && predicate2(rolls)
                         },
                         calculateScore: function (rolls) {
                             var frameScore = sumOfNext(numberOfRolls, rolls)
