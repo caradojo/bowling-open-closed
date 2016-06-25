@@ -12,10 +12,6 @@ function isStrike(rolls) {
     return rolls[0] == 10
 }
 
-function sumOfNext(number, rolls) {
-    return _.take(rolls, number).reduce(sum);
-}
-
 function isLastMartianFrame(rolls) {
     return rolls[4] == undefined
 }
@@ -23,14 +19,18 @@ function isLastFrame(rolls) {
     return rolls[3] === undefined
 }
 
+function always() {
+    return true
+}
+
+function sumOfNext(number, rolls) {
+    return _.take(rolls, number).reduce(sum);
+}
 
 function sum(a, b) {
     return a + b
 }
 
-function always() {
-    return true
-}
 
 function FrameType(matchesFn, calculateScoreFn) {
     return {
