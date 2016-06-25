@@ -11,7 +11,6 @@ function appliesWhen(predicate1, predicate2, etc) {
                         matches: function (rolls) {
 
                             return _.every(predicates, p => p(rolls))
-                            //return predicate1(rolls) && predicate2(rolls)
                         },
                         calculateScore: function (rolls) {
                             var frameScore = sumOfNext(numberOfRolls, rolls)
@@ -99,7 +98,7 @@ class martianNormalFrame {
 
 
 var martianSpareFrame =
-    appliesWhen(isMartianSpare, () => true)
+    appliesWhen(isMartianSpare)
         .sumsUpNextRolls(4)
         .removesRolls(3)
 
