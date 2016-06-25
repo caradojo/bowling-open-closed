@@ -84,18 +84,10 @@ class normalFrame {
     }
 }
 
-class martianNormalFrame {
-    matches() {
-        return true
-    }
-
-    calculateScore(rolls) {
-        var frameScore = sumOfNext(3, rolls)
-        var nextRolls = _.drop(rolls, 3);
-        return scoreAndRemainingRolls(frameScore, nextRolls)
-    }
-}
-
+var martianNormalFrame =
+    appliesWhen(() => true)
+        .sumsUpNextRolls(3)
+        .removesRolls(3)
 
 var martianSpareFrame =
     appliesWhen(isMartianSpare)
