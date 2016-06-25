@@ -1,6 +1,40 @@
 import * as _ from 'lodash'
 
 
+function isMartianSpare(rolls) {
+    return sumOfNext(3, rolls) >= 10
+}
+
+function isSpare(rolls) {
+    return rolls[0] + rolls[1] == 10
+}
+function isStrike(rolls) {
+    return rolls[0] == 10
+}
+
+function sumOfNext(number, rolls) {
+    return _.take(rolls, number).reduce(sum);
+}
+
+function isLastMartianFrame(rolls) {
+    return rolls[4] == undefined
+}
+function isLastFrame(rolls) {
+    return rolls[3] === undefined
+}
+
+function scoreAndRemainingRolls(frameScore, nextRolls) {
+    return {frameScore: frameScore, nextRolls: nextRolls}
+}
+
+function sum(a, b) {
+    return a + b
+}
+
+function always() {
+    return true
+}
+
 function appliesWhen(predicate1, predicate2, etc) {
     var predicates = Array.prototype.slice.call(arguments);
     return {
@@ -24,30 +58,16 @@ function appliesWhen(predicate1, predicate2, etc) {
     }
 }
 
-class strikeFrame {
-    matches(rolls) {
-        return isStrike(rolls)
-    }
+var strikeFrame =
+    appliesWhen(isStrike)
+        .sumsUpNextRolls(3)
+        .removesRolls(1)
 
-    calculateScore(rolls) {
-        var frameScore = sumOfNext(3, rolls);
-        var nextRolls = _.drop(rolls, 1);
-        return scoreAndRemainingRolls(frameScore, nextRolls)
-    }
-}
 
-class strikeInLastFrame {
-    matches(rolls) {
-        return isLastFrame(rolls) && isStrike(rolls)
-    }
-
-    calculateScore(rolls) {
-        var frameScore = sumOfNext(3, rolls);
-        var nextRolls = _.drop(rolls, 3)
-        return scoreAndRemainingRolls(frameScore, nextRolls)
-    }
-}
-
+var strikeInLastFrame =
+    appliesWhen(isLastFrame, isStrike)
+        .sumsUpNextRolls(3)
+        .removesRolls(3)
 
 var spareInLastFrame =
     appliesWhen(isLastFrame, isSpare)
@@ -84,40 +104,6 @@ var martianSpareInLastFrame =
         .sumsUpNextRolls(4)
         .removesRolls(4)
 
-
-function isMartianSpare(rolls) {
-    return sumOfNext(3, rolls) >= 10
-}
-
-function isSpare(rolls) {
-    return rolls[0] + rolls[1] == 10
-}
-function isStrike(rolls) {
-    return rolls[0] == 10
-}
-
-function sumOfNext(number, rolls) {
-    return _.take(rolls, number).reduce(sum);
-}
-
-function isLastMartianFrame(rolls) {
-    return rolls[4] == undefined
-}
-function isLastFrame(rolls) {
-    return rolls[3] === undefined
-}
-
-function scoreAndRemainingRolls(frameScore, nextRolls) {
-    return {frameScore: frameScore, nextRolls: nextRolls}
-}
-
-function sum(a, b) {
-    return a + b
-}
-
-function always() {
-    return true
-}
 
 export {
     strikeInLastFrame,
